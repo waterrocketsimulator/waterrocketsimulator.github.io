@@ -1,0 +1,165 @@
+body {
+    background: linear-gradient(90deg, #a0d6ef, #a8f4d9);
+    font-family: Arial;
+}
+
+#title {
+    background-color: white;
+    font-family: Lucida Sans Unicode;
+    font-size: 40px;
+    text-align: center;
+    margin: 10px;
+    padding-top: 1px;
+}
+
+h2{
+    text-align: center;
+    padding: 30px;
+}
+
+h3{
+    text-align: center;
+    padding: 30px;
+}
+
+p {
+    font-size: 16px;
+    text-align: center;
+}
+
+.buttonContainer{
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.sliderContainer{
+    float: left;
+    width: 33%;
+    min-width: 250px;
+    max-width: 1920px;
+   
+}
+
+.slider{
+    -webkit-appearance: none;
+    background: #d3d3d3;
+    height: 6px;
+    width: 90%;
+    transition: opacity 0.3s;	
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#stagesSlider{
+    margin-left: auto;
+    margin-right: auto;
+    width: 180px;
+}
+
+.slider:hover{
+    opacity: 0.5;
+}
+
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+#stage2 {
+    display: inline;
+}
+
+#stage3 {
+    display: inline;
+}
+
+.value2 {
+    display: table-cell;
+}
+
+.value3 {
+    display: table-cell;
+}
+
+table{
+    border: 1px solid black;
+    height: 40%;
+    margin-top: 600px;
+    margin-bottom: 25px;
+}
+
+th {
+    background: #4CAF50;
+    text-align: center;
+    height: 60px;
+    width: 50px;
+    padding: 5px;
+}
+
+td {
+    padding: 5px;
+    height: 20px;
+}
+
+.imprint {
+    color: Gray;
+    font-size: 14px;
+    text-align: left;
+    margin-left: 10px;
+    padding: 5px;
+    
+}
+
+button {
+    position: relative;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #4CAF50;
+    border: 20px invisible white;
+    font-size: 22px;
+    color: #FFFFFF;
+    padding: 5px;
+    width: 120px;
+    height: 45px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.3s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+button:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
