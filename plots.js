@@ -1,0 +1,1598 @@
+function drawPlots(){
+	drawAltitudePlot();
+	drawVelocityPlot();
+	drawAccelerationPlot();
+	drawThrustPlot();
+}
+
+function drawAltitudePlot() {
+  var altitudePlot = document.getElementById("altitudePlot");
+  var ctx = altitudePlot.getContext("2d");
+	var offset = 60;
+	var maxY = Math.max.apply(null, plotDataStorage.altitude);
+	var maxX = plotDataStorage.fl;
+	var height = altitudePlot.height;
+	var width = altitudePlot.width;
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
+  ctx.fillStyle = "#000000";
+	ctx.font = "12px sans-serif";
+	
+	//draw x and y axes with arrows
+	ctx.beginPath();
+	ctx.moveTo(offset, 0);
+	ctx.lineTo(offset - 2, 10);
+	ctx.lineTo(offset + 2, 10);
+	ctx.lineTo(offset, 0);
+	ctx.lineTo(offset, height - offset);
+	ctx.lineTo(width, height - offset);
+	ctx.lineTo(width - 10, height - offset + 2);
+	ctx.lineTo(width - 10, height - offset - 2);
+	ctx.lineTo(width, height - offset);
+  ctx.stroke();
+	
+	//draw scale X
+	if (maxX > 256){
+		for (i = 1; i < maxX / 32; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 64, i * (width - offset) / maxX * 64 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 128 && maxX < 256){
+		for (i = 1; i < maxX / 16; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 32, i * (width - offset) / maxX * 32 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 64 && maxX < 128){
+		for (i = 1; i < maxX / 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 16, i * (width - offset) / maxX * 16 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 32 && maxX < 64){
+		for (i = 1; i < maxX / 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 8, i * (width - offset) / maxX * 8 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 16 && maxX < 32){
+		for (i = 1; i < maxX / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 4, i * (width - offset) / maxX * 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 8 && maxX < 16){
+		for (i = 1; i < maxX; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, i * (width - offset) / maxX * 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 4 && maxX < 8){
+		for (i = 1; i < maxX*2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, i * (width - offset) / maxX * 1 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 2 && maxX < 4){
+		for (i = 1; i < maxX * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 2, i * (width - offset) / maxX / 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX < 2){
+		for (i = 1; i < maxX * 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 4, i * (width - offset) / maxX / 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	
+	//draw scale Y
+	if (maxY > 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50000, 0.1 * offset, - i * (height - offset) / maxY * 50000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 25000 && maxY < 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5000, 0.1 * offset, - i * (height - offset) / maxY * 5000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10000 && maxY < 25000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2500, 0.1 * offset, - i * (height - offset) / maxY * 2500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 5000 && maxY < 10000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1000, 0.1 * offset, - i * (height - offset) / maxY * 1000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 2000 && maxY < 5000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 500, 0.1 * offset, - i * (height - offset) / maxY * 500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 1000 && maxY < 2000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 200, 0.1 * offset, - i * (height - offset) / maxY * 200 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 500 && maxY < 1000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 100, 0.1 * offset, - i * (height - offset) / maxY * 100 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 200 && maxY < 500){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50, 0.1 * offset, - i * (height - offset) / maxY * 50 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 100 && maxY < 200){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 25, 0.1 * offset, - i * (height - offset) / maxY * 25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 50 && maxY < 100){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 10, 0.1 * offset, - i * (height - offset) / maxY * 10 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10 && maxY < 50){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5, 0.1 * offset, - i * (height - offset) / maxY * 5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY < 10){
+		for (i = 1; i < maxY / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, 0.1 * offset, - i * (height - offset) / maxY * 2 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	ctx.beginPath();	
+	ctx.moveTo(offset, height - offset);
+	ctx.strokeStyle = "#000000";
+	ctx.setLineDash([]);
+	
+	for (i = 0; i < plotDataStorage.altitude.length; i++){
+	  ctx.lineTo(i * (width - offset) / (plotDataStorage.altitude.length) + offset, height - plotDataStorage.altitude[i] * (height - offset) / maxY - offset);
+	}
+	ctx.stroke();
+}
+
+function drawVelocityPlot() {
+  var velocityPlot = document.getElementById("velocityPlot");
+  var ctx = velocityPlot.getContext("2d");
+	var offset = 60;
+	var maxY = Math.max.apply(null, plotDataStorage.velocity);
+	var maxX = plotDataStorage.fl;
+	var height = velocityPlot.height;
+	var width = velocityPlot.width;
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
+  ctx.fillStyle = "#000000";
+	ctx.font = "12px sans-serif";
+	
+	//draw x and y axes with arrows
+	ctx.beginPath();
+	ctx.moveTo(offset, 0);
+	ctx.lineTo(offset - 2, 10);
+	ctx.lineTo(offset + 2, 10);
+	ctx.lineTo(offset, 0);
+	ctx.lineTo(offset, height - offset);
+	ctx.lineTo(width, height - offset);
+	ctx.lineTo(width - 10, height - offset + 2);
+	ctx.lineTo(width - 10, height - offset - 2);
+	ctx.lineTo(width, height - offset);
+  ctx.stroke();
+	
+	//draw scale X
+	if (maxX > 256){
+		for (i = 1; i < maxX / 32; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 64, i * (width - offset) / maxX * 64 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 128 && maxX < 256){
+		for (i = 1; i < maxX / 16; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 32, i * (width - offset) / maxX * 32 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 64 && maxX < 128){
+		for (i = 1; i < maxX / 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 16, i * (width - offset) / maxX * 16 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 32 && maxX < 64){
+		for (i = 1; i < maxX / 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 8, i * (width - offset) / maxX * 8 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 16 && maxX < 32){
+		for (i = 1; i < maxX / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 4, i * (width - offset) / maxX * 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 8 && maxX < 16){
+		for (i = 1; i < maxX; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, i * (width - offset) / maxX * 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 4 && maxX < 8){
+		for (i = 1; i < maxX*2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, i * (width - offset) / maxX * 1 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 2 && maxX < 4){
+		for (i = 1; i < maxX * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 2, i * (width - offset) / maxX / 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX < 2){
+		for (i = 1; i < maxX * 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 4, i * (width - offset) / maxX / 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	
+	//draw scale Y
+	if (maxY > 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50000, 0.1 * offset, - i * (height - offset) / maxY * 50000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 25000 && maxY < 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5000, 0.1 * offset, - i * (height - offset) / maxY * 5000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10000 && maxY < 25000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2500, 0.1 * offset, - i * (height - offset) / maxY * 2500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 5000 && maxY < 10000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1000, 0.1 * offset, - i * (height - offset) / maxY * 1000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 2000 && maxY < 5000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 500, 0.1 * offset, - i * (height - offset) / maxY * 500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 1000 && maxY < 2000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 200, 0.1 * offset, - i * (height - offset) / maxY * 200 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 500 && maxY < 1000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 100, 0.1 * offset, - i * (height - offset) / maxY * 100 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 200 && maxY < 500){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50, 0.1 * offset, - i * (height - offset) / maxY * 50 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 100 && maxY < 200){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 25, 0.1 * offset, - i * (height - offset) / maxY * 25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 50 && maxY < 100){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 10, 0.1 * offset, - i * (height - offset) / maxY * 10 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10 && maxY < 50){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5, 0.1 * offset, - i * (height - offset) / maxY * 5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY < 10){
+		for (i = 1; i < maxY / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, 0.1 * offset, - i * (height - offset) / maxY * 2 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	ctx.beginPath();	
+	ctx.moveTo(offset, height - offset);
+	ctx.strokeStyle = "#000000";
+	ctx.setLineDash([]);
+	
+	for (i = 0; i < plotDataStorage.velocity.length; i++){
+	  ctx.lineTo(i * (width - offset) / (plotDataStorage.velocity.length) + offset, height - plotDataStorage.velocity[i] * (height - offset) / maxY - offset);
+	}
+	ctx.stroke();
+}
+
+function drawAccelerationPlot() {
+  var accelerationPlot = document.getElementById("accelerationPlot");
+  var ctx = accelerationPlot.getContext("2d");
+	var offset = 60;
+	var maxY = Math.max.apply(null, plotDataStorage.acceleration);
+	var maxX = plotDataStorage.al;
+	var height = accelerationPlot.height;
+	var width = accelerationPlot.width;
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
+  ctx.fillStyle = "#000000";
+	ctx.font = "12px sans-serif";
+	
+	//draw x and y axes with arrows
+	ctx.beginPath();
+	ctx.moveTo(offset, 0);
+	ctx.lineTo(offset - 2, 10);
+	ctx.lineTo(offset + 2, 10);
+	ctx.lineTo(offset, 0);
+	ctx.lineTo(offset, height - offset);
+	ctx.lineTo(width, height - offset);
+	ctx.lineTo(width - 10, height - offset + 2);
+	ctx.lineTo(width - 10, height - offset - 2);
+	ctx.lineTo(width, height - offset);
+  ctx.stroke();
+	
+	//draw scale X
+	if (maxX > 256){
+		for (i = 1; i < maxX / 32; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 64, i * (width - offset) / maxX * 64 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 128 && maxX < 256){
+		for (i = 1; i < maxX / 16; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 32, i * (width - offset) / maxX * 32 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 64 && maxX < 128){
+		for (i = 1; i < maxX / 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 16, i * (width - offset) / maxX * 16 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 32 && maxX < 64){
+		for (i = 1; i < maxX / 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 8, i * (width - offset) / maxX * 8 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 16 && maxX < 32){
+		for (i = 1; i < maxX / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 4, i * (width - offset) / maxX * 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 8 && maxX < 16){
+		for (i = 1; i < maxX; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, i * (width - offset) / maxX * 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 4 && maxX < 8){
+		for (i = 1; i < maxX*2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, i * (width - offset) / maxX * 1 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 2 && maxX < 4){
+		for (i = 1; i < maxX * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 2, i * (width - offset) / maxX / 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX < 2){
+		for (i = 1; i < maxX * 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 4, i * (width - offset) / maxX / 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	
+	//draw scale Y
+	if (maxY > 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50000, 0.1 * offset, - i * (height - offset) / maxY * 50000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 25000 && maxY < 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5000, 0.1 * offset, - i * (height - offset) / maxY * 5000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10000 && maxY < 25000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2500, 0.1 * offset, - i * (height - offset) / maxY * 2500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 5000 && maxY < 10000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1000, 0.1 * offset, - i * (height - offset) / maxY * 1000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 2000 && maxY < 5000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 500, 0.1 * offset, - i * (height - offset) / maxY * 500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 1000 && maxY < 2000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 200, 0.1 * offset, - i * (height - offset) / maxY * 200 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 500 && maxY < 1000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 100, 0.1 * offset, - i * (height - offset) / maxY * 100 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 200 && maxY < 500){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50, 0.1 * offset, - i * (height - offset) / maxY * 50 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 100 && maxY < 200){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 25, 0.1 * offset, - i * (height - offset) / maxY * 25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 50 && maxY < 100){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 10, 0.1 * offset, - i * (height - offset) / maxY * 10 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10 && maxY < 50){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5, 0.1 * offset, - i * (height - offset) / maxY * 5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY < 10){
+		for (i = 1; i < maxY / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, 0.1 * offset, - i * (height - offset) / maxY * 2 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	ctx.beginPath();	
+	ctx.moveTo(offset, height - offset);
+	ctx.strokeStyle = "#000000";
+	ctx.setLineDash([]);
+	
+	for (i = 0; i < plotDataStorage.acceleration.length; i++){
+	  ctx.lineTo(i * (width - offset) / (plotDataStorage.acceleration.length) + offset, height - plotDataStorage.acceleration[i] * (height - offset) / maxY - offset);
+	}
+	ctx.stroke();
+}
+
+function drawThrustPlot() {
+  var thrustPlot = document.getElementById("thrustPlot");
+  var ctx = thrustPlot.getContext("2d");
+	var offset = 60;
+	var maxY = Math.max.apply(null, plotDataStorage.thrust);
+	var maxX = plotDataStorage.al;
+	var height = thrustPlot.height;
+	var width = thrustPlot.width;
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
+  ctx.fillStyle = "#000000";
+	ctx.font = "12px sans-serif";
+	
+	//draw x and y axes with arrows
+	ctx.beginPath();
+	ctx.moveTo(offset, 0);
+	ctx.lineTo(offset - 2, 10);
+	ctx.lineTo(offset + 2, 10);
+	ctx.lineTo(offset, 0);
+	ctx.lineTo(offset, height - offset);
+	ctx.lineTo(width, height - offset);
+	ctx.lineTo(width - 10, height - offset + 2);
+	ctx.lineTo(width - 10, height - offset - 2);
+	ctx.lineTo(width, height - offset);
+  ctx.stroke();
+	
+	//draw scale X
+	if (maxX > 256){
+		for (i = 1; i < maxX / 32; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 64, i * (width - offset) / maxX * 64 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 64 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 64 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 128 && maxX < 256){
+		for (i = 1; i < maxX / 16; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 32, i * (width - offset) / maxX * 32 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 32 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 32 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 64 && maxX < 128){
+		for (i = 1; i < maxX / 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 16, i * (width - offset) / maxX * 16 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 16 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 16 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 32 && maxX < 64){
+		for (i = 1; i < maxX / 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 8, i * (width - offset) / maxX * 8 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 8 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 8 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 16 && maxX < 32){
+		for (i = 1; i < maxX / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 4, i * (width - offset) / maxX * 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 8 && maxX < 16){
+		for (i = 1; i < maxX; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, i * (width - offset) / maxX * 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 4 && maxX < 8){
+		for (i = 1; i < maxX*2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, i * (width - offset) / maxX * 1 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX * 1 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX * 1 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX > 2 && maxX < 4){
+		for (i = 1; i < maxX * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 2, i * (width - offset) / maxX / 2 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 2 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 2 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	if (maxX < 2){
+		for (i = 1; i < maxX * 8; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset + 8);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.stroke();
+			ctx.strokeText(i / 4, i * (width - offset) / maxX / 4 + offset - 5, height - .5 * offset);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(i * (width - offset) / maxX / 4 + offset, height - offset);
+			ctx.lineTo(i * (width - offset) / maxX / 4 + offset, 0);
+			ctx.stroke();
+		}
+	}
+	
+	//draw scale Y
+	if (maxY > 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50000, 0.1 * offset, - i * (height - offset) / maxY * 50000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 25000 && maxY < 100000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5000, 0.1 * offset, - i * (height - offset) / maxY * 5000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10000 && maxY < 25000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2500, 0.1 * offset, - i * (height - offset) / maxY * 2500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 5000 && maxY < 10000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1000, 0.1 * offset, - i * (height - offset) / maxY * 1000 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 2000 && maxY < 5000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 500, 0.1 * offset, - i * (height - offset) / maxY * 500 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 1000 && maxY < 2000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 200, 0.1 * offset, - i * (height - offset) / maxY * 200 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 500 && maxY < 1000){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 100, 0.1 * offset, - i * (height - offset) / maxY * 100 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 200 && maxY < 500){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 50, 0.1 * offset, - i * (height - offset) / maxY * 50 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 100 && maxY < 200){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 25, 0.1 * offset, - i * (height - offset) / maxY * 25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 50 && maxY < 100){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 10, 0.1 * offset, - i * (height - offset) / maxY * 10 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 10 && maxY < 50){
+		for (i = 1; i < maxY / 5; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 5, 0.1 * offset, - i * (height - offset) / maxY * 5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY < 10){
+		for (i = 1; i < maxY / 2; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 2, 0.1 * offset, - i * (height - offset) / maxY * 2 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	ctx.beginPath();	
+	ctx.moveTo(offset, height - offset);
+	ctx.strokeStyle = "#000000";
+	ctx.setLineDash([]);
+	
+	for (i = 0; i < plotDataStorage.thrust.length; i++){
+	  ctx.lineTo(i * (width - offset) / (plotDataStorage.thrust.length) + offset, height - plotDataStorage.thrust[i] * (height - offset) / maxY - offset);
+	}
+	ctx.stroke();
+}
