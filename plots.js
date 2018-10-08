@@ -188,7 +188,7 @@ function drawAltitudePlot() {
 	
 	//draw scale Y
 	if (maxY > 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -205,7 +205,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 25000 && maxY < 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 5000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -222,7 +222,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 10000 && maxY < 25000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -239,7 +239,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 5000 && maxY < 10000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 1000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -256,7 +256,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 2000 && maxY < 5000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 400; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -273,7 +273,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 1000 && maxY < 2000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 200; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -290,7 +290,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 500 && maxY < 1000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 100; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -307,7 +307,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 200 && maxY < 500){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 40; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -324,7 +324,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 100 && maxY < 200){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -341,7 +341,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 50 && maxY < 100){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 10; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -358,7 +358,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY > 10 && maxY < 50){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -375,7 +375,7 @@ function drawAltitudePlot() {
 		}
 	}
 	if (maxY < 10){
-		for (i = 1; i < maxY / 2; i++){
+		for (i = 1; i < maxY * 5; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -586,7 +586,7 @@ function drawVelocityPlot() {
 	
 	//draw scale Y
 	if (maxY > 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -603,7 +603,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 25000 && maxY < 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 5000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -620,7 +620,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 10000 && maxY < 25000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -637,7 +637,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 5000 && maxY < 10000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 1000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -654,7 +654,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 2000 && maxY < 5000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 1000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -671,7 +671,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 1000 && maxY < 2000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 200; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -688,7 +688,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 500 && maxY < 1000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 100; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -705,7 +705,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 200 && maxY < 500){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 40; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -722,7 +722,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 100 && maxY < 200){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -739,7 +739,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 50 && maxY < 100){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 10; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -756,7 +756,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY > 10 && maxY < 50){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -773,7 +773,7 @@ function drawVelocityPlot() {
 		}
 	}
 	if (maxY < 10){
-		for (i = 1; i < maxY / 2; i++){
+		for (i = 1; i < maxY * 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -984,7 +984,7 @@ function drawAccelerationPlot() {
 	
 	//draw scale Y
 	if (maxY > 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1001,7 +1001,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 25000 && maxY < 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 5000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1018,7 +1018,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 10000 && maxY < 25000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1035,7 +1035,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 5000 && maxY < 10000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 1000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1052,7 +1052,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 2000 && maxY < 5000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 400; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1069,7 +1069,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 1000 && maxY < 2000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 200; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1086,7 +1086,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 500 && maxY < 1000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 100; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1103,7 +1103,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 200 && maxY < 500){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 40; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1120,7 +1120,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 100 && maxY < 200){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1137,7 +1137,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY > 50 && maxY < 100){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 10; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1171,7 +1171,7 @@ function drawAccelerationPlot() {
 		}
 	}
 	if (maxY < 10){
-		for (i = 1; i < maxY / 2; i++){
+		for (i = 1; i < maxY * 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1382,7 +1382,7 @@ function drawThrustPlot() {
 	
 	//draw scale Y
 	if (maxY > 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1399,7 +1399,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 25000 && maxY < 100000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 5000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1416,7 +1416,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 10000 && maxY < 25000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 2000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1433,7 +1433,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 5000 && maxY < 10000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 1000; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1450,7 +1450,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 2000 && maxY < 5000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 400; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1467,7 +1467,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 1000 && maxY < 2000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 200; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1484,7 +1484,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 500 && maxY < 1000){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 100; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1501,7 +1501,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 200 && maxY < 500){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 40; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1518,7 +1518,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 100 && maxY < 200){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 20; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1535,7 +1535,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY > 50 && maxY < 100){
-		for (i = 1; i < maxY / 5; i++){
+		for (i = 1; i < maxY / 10; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -1569,7 +1569,7 @@ function drawThrustPlot() {
 		}
 	}
 	if (maxY < 10){
-		for (i = 1; i < maxY / 2; i++){
+		for (i = 1; i < maxY * 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";

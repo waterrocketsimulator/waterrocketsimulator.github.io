@@ -5,8 +5,8 @@ var plotDataStorage = {
 	al : 0, //acceleration length in seconds
 	altitude : [0],
 	velocity : [0],
-	acceleration : [0],
-	thrust : [0],
+	acceleration : [],
+	thrust : [],
 }
 
 
@@ -232,7 +232,7 @@ function stageIgnition(h, vr, V, Vw, ro, Ar, An, p, Cd, m0, lt, ft, currentStage
     var outputT = T;
     var outputve = ve;
     var outputa = a;
-
+		
 if (h == 0){ //calculation loop - acceleration on launch tube phase
  V -= lt * An; //launch tube grabs space inside the rocket's vessel
  console.log("launch tube phase");
