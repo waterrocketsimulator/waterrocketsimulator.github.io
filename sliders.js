@@ -8,6 +8,17 @@ stagesNum.oninput = function(){
 	launch();
 }
 
+var units = document.getElementById("units");
+var unitsOutput = document.getElementById("unitsValue");
+if (units.value == 1) unitsOutput.innerHTML = "metric";
+else unitsOutput.innerHTML = "imperial";
+
+units.oninput = function(){
+	if (units.value == 1) unitsOutput.innerHTML = "metric";
+	else unitsOutput.innerHTML = "imperial";
+	launch();
+}
+
 //stage 1
 var vesselCapacity = document.getElementById("vesselCapacity");
 var vesselCapacityOutput = document.getElementById("vesselCapacityValue");
@@ -214,13 +225,13 @@ function hideStages(){
 	var stagesNum = parseInt(numberOfStages.value);
 	switch (stagesNum){
 		case 1:
-			document.getElementById("stage2").style.display = "none";
-			document.getElementById("stage3").style.display = "none";
+			document.getElementById("stage2").style.visibility = "hidden";
+			document.getElementById("stage3").style.visibility = "hidden";
 			
-			var sliders = document.getElementsByClassName("sliderContainer");
+			/*var sliders = document.getElementsByClassName("sliderContainer");
 			for (i = 0; i < sliders.length; i++){
 				sliders[i].style.width = "100%";
-			}
+			}*/
 			
 			var results2 = document.getElementsByClassName("value2");
       for (i = 0; i < results2.length; i++){
@@ -233,13 +244,13 @@ function hideStages(){
 		  break;
 			
 		case 2:
-			document.getElementById("stage2").style.display = "inline";
-			document.getElementById("stage3").style.display = "none";
+			document.getElementById("stage2").style.visibility = "visible";
+			document.getElementById("stage3").style.visibility = "hidden";
 			
-			var sliders = document.getElementsByClassName("sliderContainer");
+			/*var sliders = document.getElementsByClassName("sliderContainer");
 			for (i = 0; i < sliders.length; i++){
 				sliders[i].style.width = "50%";
-			}
+			}*/
 			
 			var results2 = document.getElementsByClassName("value2");
       for (i = 0; i < results2.length; i++){
@@ -252,13 +263,13 @@ function hideStages(){
 		  break;
 			
 		case 3:
-			document.getElementById("stage2").style.display = "inline";
-			document.getElementById("stage3").style.display = "inline";
+			document.getElementById("stage2").style.visibility = "visible";
+			document.getElementById("stage3").style.visibility = "visible";
 			
-			var sliders = document.getElementsByClassName("sliderContainer");
+			/*var sliders = document.getElementsByClassName("sliderContainer");
 			for (i = 0; i < sliders.length; i++){
 				sliders[i].style.width = "33%";
-			}
+			}*/
 			
 			var results2 = document.getElementsByClassName("value2");
       for (i = 0; i < results2.length; i++){
