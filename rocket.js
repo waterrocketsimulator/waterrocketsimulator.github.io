@@ -1,6 +1,6 @@
 //object to store flightdata, for plots
 var plotDataStorage = {
-	ts : 10, //time steps, after which data is saved to generate plots. higher number -> less acurate plots
+	ts : 1, //time steps, after which data is saved to generate plots. higher number -> less acurate plots
 	fl : 0, //whole flight length in seconds
 	al : 0, //acceleration length in seconds
 	altitude : [0],
