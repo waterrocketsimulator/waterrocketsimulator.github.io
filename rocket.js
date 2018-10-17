@@ -309,8 +309,8 @@ while (m > m0 && vr > 0 && a > 0){
 	mA = (p + pa) / (R * temp) * V; //mass of pressurised air
 	roAp = mA / V; //pressurised air density (kg/m^3)
 	vSound = Math.sqrt(k * R * temp);
-  ve = Math.sqrt(temp * R / Mol * 2 * k / (k - 1) * (1 - Math.pow((pa / (p + pa)), ((k - 1) / k)))); //exhaust velocity from De Laval nozzle equation
-	M = ve / vSound; //Mach number
+        ve = Math.sqrt(temp * R * 2 * k / (k - 1) * (1 - Math.pow((pa / (p + pa)), ((k - 1) / k)))); //exhaust velocity from De Laval nozzle equation
+	if (vSound < ve) ve = vSound;
 	lastM = m;
 	m -= An * roAp * ve * dt; //mass decreases
 	dm = lastM - m; //mass decrease in one step
