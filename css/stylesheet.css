@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(90deg, #a0d6ef, #a8f4d9);
+    background-image: linear-gradient(to bottom right, #4da6ff, #ffffff);
     font-family: Arial;
 }
 
@@ -8,84 +8,63 @@ body {
     font-family: Lucida Sans Unicode;
     font-size: 40px;
     text-align: center;
-    margin: 10px;
-    padding-top: 1px;
+		width: 70%;
+    margin: auto auto;
+    padding: 10px;
 }
 
 h2{
     text-align: center;
-    padding: 30px;
+    padding: 20px;
 }
 
 h3{
+		font-size: 18px;
     text-align: center;
-    padding: 30px;
+    padding: 10px;
 }
 
 p {
-    font-size: 16px;
-    text-align: center;
+   	font-size: 16px;
+    	text-align: center;
+	margin: 8px auto;
 }
 
-.buttonContainer{
-    float: left;
-    width: 100%;
-    position: relative;
+.globalGrid{
+	display: grid;
+	grid-template-columns: minmax(250px, 350px) minmax(255px, 400px) minmax(255px, 400px) minmax(35	0px, 500px) 300px;
+	grid-template-rows: 80px 380px 380px 380px;
 }
 
-.sliderContainer{
-    float: left;
-    width: 33%;
-    min-width: 250px;
-    max-width: 1920px;
-   
+#stagesSlider {
+	grid-row: 1 / span 1;
+	grid-column: 3 / span 1; 
+  	width: 180px;
 }
 
-.slider{
-    -webkit-appearance: none;
-    background: #d3d3d3;
-    height: 6px;
-    width: 90%;
-    transition: opacity 0.3s;	
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+#landing {
+	display: none;
 }
 
-#stagesSlider{
-    margin-left: auto;
-    margin-right: auto;
-    width: 180px;
+#reserve {
+	display: none;
 }
 
-.slider:hover{
-    opacity: 0.5;
-}
-
-.slider::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%; 
-    background: #4CAF50;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb{
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
+#stage1{
+	grid-row: 2 / span 1;
+	grid-column: 1 / span 1;
 }
 
 #stage2 {
     display: inline;
+	grid-row: 3 / span 1;
+	grid-column: 1 / span 1;
 }
 
 #stage3 {
     display: inline;
+	grid-row: 4 / span 1;
+	grid-column: 1 / span 1;
 }
 
 .value2 {
@@ -96,15 +75,69 @@ p {
     display: table-cell;
 }
 
+.altitudePlot{
+		
+	grid-area: 2 / 2 / span 1 / span 1;
+	
+}
+.velocityPlot{
+		
+	grid-area: 2 / 3 / span 1 / span 1;
+	
+}
+.accelerationPlot{
+		
+	grid-area: 3 / 2 / span 1 / span 1;
+	
+}
+.thrustPlot{
+		
+	grid-area: 3 / 3 / span 1 / span 1;
+	
+}
+.exhaustPlot{
+		
+	grid-area: 4 / 2 / span 1 / span 1;
+	
+}
+
+.plot{
+	border: 1px solid black;
+	/*margin: 0px 10px 10px 10px;*/
+	/*float: left;*/
+	
+}
+
+#unitsSlider {
+   	display: none;
+	float: left;
+   	margin-left: 20px;
+   	margin-rigth: auto;
+  	width: 110px;
+}
+
+.sliderContainer{
+    /*float: left;*/
+    width: 95%;
+		/*margin: auto auto;*/
+}
+
+.table{
+	grid-row: 2 / span 2;
+	grid-column: 4 / span 1;
+}
+
 table{
-    border: 1px solid black;
-    height: 40%;
-    margin-top: 600px;
-    margin-bottom: 25px;
+  	border: 1px solid black;
+	width: 350px;
+	font-size: 16px;    	
+	/*height: 40%;*/
+    	/*margin: 10px;*/
+	/*float: right;*/
 }
 
 th {
-    background: #4CAF50;
+    background: #FFFFFF;
     text-align: center;
     height: 60px;
     width: 50px;
@@ -116,13 +149,56 @@ td {
     height: 20px;
 }
 
-.imprint {
+.rocketBody{
+	grid-row: 2 / span 2;
+	grid-column: 5 / span 1;
+	
+}
+
+#rocketBody{
+	border: 1px solid black;
+}
+
+#imprint {
     color: Gray;
     font-size: 14px;
     text-align: left;
-    margin-left: 10px;
+    margin: 10px auto auto 10px;
     padding: 5px;
-    
+    float: left;
+}
+
+.slider {
+    -webkit-appearance: none;
+    background: #d3d3d3;
+    height: 5px;
+    width: 90%;
+    transition: opacity 0.3s;	
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slider:hover{
+    opacity: 0.5;
+}
+
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%; 
+    background: #FFFFFF;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    cursor: pointer;
 }
 
 button {
