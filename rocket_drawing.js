@@ -9,6 +9,7 @@ function drawRocketBody() {
 	var cornerRound = .02;
 	var neckHeight = .075;
 	var nozzleHeight = .0075;
+	var ltBase = .2; //launch tube base diameter
   
 	var diameter1 = vesselDiameter.value / 1000;
 	var diameter2 = vesselDiameter2.value / 1000;
@@ -37,22 +38,31 @@ function drawRocketBody() {
 	var maxY;
 	var scale;
 	var stagesNum = numberOfStages.value;
-	if (stagesNum == 1){
-		scale = (height - 2 * offset) / (stage1Height);
-		maxY = stage1Height + offset / scale;
-	}
-	if (stagesNum == 2){
-		scale = (height - 3 * offset) / (stage1Height + stage2Height);
-		maxY = stage1Height + stage2Height + 2 * offset / scale;
-	}
-	if (stagesNum == 3){
-		scale = (height - 4 * offset) / (stage1Height + stage2Height + stage3Height);
-		maxY = stage1Height + stage2Height + stage3Height + 3 * offset / scale;
-	}
-	maxY *= 100; //convert maxY to cm
+	stagesNum *= 1;
 	
-	console.log("scale: " + scale);
-	console.log("stage1Height: " + stage1Height);
+	var biggestDiameter;
+	switch (stagesNum) {
+		case 1:
+			scale = (height - 2 * offset) / (stage1Height);
+			maxY = stage1Height + offset / scale;
+			biggestDiameter = diameter1;
+			break;
+		case 2:
+			scale = (height - 3 * offset) / (stage1Height + stage2Height);
+			maxY = stage1Height + stage2Height + 2 * offset / scale;
+			if (diameter1 > diameter2) biggestDiameter = diameter1;
+			else biggestDiameter = diameter2;
+			break;
+		case 3:
+			scale = (height - 4 * offset) / (stage1Height + stage2Height + stage3Height);
+			maxY = stage1Height + stage2Height + stage3Height + 3 * offset / scale;
+			if (diameter1 > diameter2) biggestDiameter = diameter1;
+			else if (diameter2 > diameter3) biggestDiameter = diameter2;
+			else biggestDiameter = diameter3;
+			break;
+	}
+	if (biggestDiameter * scale > width * (width - 2 * (axisOffset + 5)) / width) scale = width * (width - 2 * (axisOffset + 5)) / width / biggestDiameter;	
+	maxY *= 100; //convert maxY to cm
 	
 	//scaling to canvas
 	diameter1 *= scale;
@@ -67,24 +77,33 @@ function drawRocketBody() {
 	cornerRound *= scale;
 	neckHeight *= scale;
 	nozzleHeight *= scale;
-	
-	console.log("scale: " + scale);
-	console.log("stage1Height: " + stage1Height);
-	
+	ltBase *= scale;
+		
 	ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
-	
-		
 	ctx.setLineDash([]);
 	  	
+	console.log("waterPercent1: " + waterPercent1);
+	console.log("waterPercent * stage1Height: " + (waterPercent1 * stage1Height));
+	console.log("lt: " + (lt * scale));
+	
 	//first stage water fill
-	var linearGradient = ctx.createLinearGradient(0,50,150,500);
-	linearGradient.addColorStop(0, "#b3ccff");
-	linearGradient.addColorStop(1, "#1a66ff");
+	var ltVolume; //underwater volume of launch tube
+	if(lt * scale > waterPercent1 * stage1Height) ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * waterPercent1 * stage1Height; //launch tube displaces water and it's level rises
+	else ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * lt * scale;
+	waterPercent1 = (waterPercent1 * stage1Height * (Math.PI * diameter1 * diameter1 / 4) + ltVolume) / (Math.PI * diameter1 * diameter1 / 4) / stage1Height;
+	if (waterPercent1 > 1) waterPercent1 = 1;
+	
+	console.log("waterPercent1: " + waterPercent1);
+	
+	var linearGradient = ctx.createLinearGradient(width / 2 - diameter1 / 2, height - offset, width / 2 + diameter1 / 2, height - offset - stage1Height);
+	linearGradient.addColorStop(1, "#4d94ff");
+	linearGradient.addColorStop(0, "#0039e6");
 	ctx.fillStyle = linearGradient;
-	ctx.fillRect(width / 2 - diameter1 / 2, height - offset, diameter1, -stage1Height * waterPercent1);
+	ctx.fillRect(width / 2 - diameter1 / 2, height - offset, diameter1, - stage1Height * waterPercent1);
 	//erase unwanted blue areas - first stage
 	ctx.fillStyle = "white";
+	ctx.strokeStyle = "white";
 	ctx.beginPath();
 	ctx.moveTo(width / 2 - diameter1 / 2 - 2, height - offset - stage1Height + cornerRound);
 	ctx.lineTo(width / 2 - diameter1 / 2, height - offset- stage1Height + cornerRound);
@@ -92,6 +111,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter1 / 2 + cornerRound, height - offset- stage1Height - 2);
 	ctx.lineTo(width / 2 - diameter1 / 2 - 2, height - offset- stage1Height - 2);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -101,6 +121,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter1 / 2 - cornerRound, height - offset- stage1Height - 2);
 	ctx.lineTo(width / 2 + diameter1 / 2 + 2, height - offset- stage1Height - 2);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -110,6 +131,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter1 / 2 - 2, height - offset - nozzleHeight - neckHeight);
 	ctx.lineTo(width / 2 - diameter1 / 2 - 2, height - offset);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -119,6 +141,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter1 / 2 + 2, height - offset - nozzleHeight - neckHeight);
 	ctx.lineTo(width / 2 + diameter1 / 2 + 2, height - offset);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	//first stage left side
@@ -146,12 +169,12 @@ function drawRocketBody() {
 	linearGradient.addColorStop(1, "#999999");
 	ctx.fillStyle = linearGradient;
 	ctx.fillRect(width / 2 - nozzleDiam1 / 2, height - offset, nozzleDiam1, -stage1Height * ltPercentage);
-	linearGradient = ctx.createLinearGradient(width / 2 - diameter1 / 2, 0, width / 2 + diameter1 / 2, 0);
+	linearGradient = ctx.createLinearGradient(width / 2 - ltBase / 2, 0, width / 2 + ltBase / 2, 0);
 	linearGradient.addColorStop(0, "#d9d9d9");
 	linearGradient.addColorStop(1, "#999999");
 	ctx.fillStyle = linearGradient;
-	ctx.fillRect(width / 2 - diameter1 / 2, height, diameter1, -offset);
-	ctx.rect(width / 2 - diameter1 / 2, height, diameter1, -offset);
+	ctx.fillRect(width / 2 - ltBase / 2, height, ltBase, -offset);
+	ctx.rect(width / 2 - ltBase / 2, height, ltBase, -offset);
 	
 	//first stage nozzle
 	ctx.fillStyle = "#663300";
@@ -159,16 +182,17 @@ function drawRocketBody() {
 	ctx.rect(width / 2 - nozzleDiam1 / 2, height - offset, nozzleDiam1, -nozzleHeight);
 	ctx.stroke();
 	
-	
+if (stagesNum == 2 || stagesNum == 3){
 	//second stage water fill
-	linearGradient = ctx.createLinearGradient(0,50,150,200);
-	linearGradient.addColorStop(0, "#b3ccff");
-	linearGradient.addColorStop(1, "#1a66ff");
+	linearGradient = ctx.createLinearGradient(width / 2 - diameter2 / 2, height - 2 * offset - stage1Height, width / 2 + diameter2 / 2, height - 2 * offset - stage1Height - stage2Height);
+	linearGradient.addColorStop(1, "#4d94ff");
+	linearGradient.addColorStop(0, "#0039e6");
 	ctx.fillStyle = linearGradient;
 	ctx.fillRect(width / 2 - diameter2 / 2, height - 2 * offset - stage1Height, diameter2, -stage2Height * waterPercent2);
 	
 	//erase unwanted blue areas - second stage
 	ctx.fillStyle = "white";
+	ctx.strokeStyle = "white";
 	ctx.beginPath();
 	ctx.moveTo(width / 2 - diameter2 / 2 - 2, height - 2 * offset - stage1Height - stage2Height + cornerRound);
 	ctx.lineTo(width / 2 - diameter2 / 2, height - 2 * offset- stage1Height - stage2Height + cornerRound);
@@ -176,6 +200,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter2 / 2 + cornerRound, height - 2 * offset- stage1Height - stage2Height - 2);
 	ctx.lineTo(width / 2 - diameter2 / 2 - 2, height - 2 * offset- stage1Height - stage2Height - 2);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -185,6 +210,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter2 / 2 - cornerRound, height - 2 * offset- stage1Height - stage2Height - 2);
 	ctx.lineTo(width / 2 + diameter2 / 2 + 2, height - 2 * offset- stage1Height - stage2Height - 2);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -194,6 +220,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter2 / 2 - 2, height - 2 * offset - nozzleHeight - neckHeight - stage1Height);
 	ctx.lineTo(width / 2 - diameter2 / 2 - 2, height - 2 * offset - stage1Height);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -203,6 +230,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter2 / 2 + 2, height - 2 * offset - nozzleHeight - neckHeight - stage1Height);
 	ctx.lineTo(width / 2 + diameter2 / 2 + 2, height - 2 * offset - stage1Height);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	//second stage left side
@@ -229,17 +257,19 @@ function drawRocketBody() {
 	ctx.fillRect(width / 2 - nozzleDiam2 / 2, height - 2 * offset - stage1Height, nozzleDiam2, -nozzleHeight);
 	ctx.rect(width / 2 - nozzleDiam2 / 2, height - 2 * offset - stage1Height, nozzleDiam2, -nozzleHeight);
 	ctx.stroke();
+}
 	
-	
+if (stagesNum == 3){
 	//third stage water fill
-	linearGradient = ctx.createLinearGradient(0,50,150,200);
-	linearGradient.addColorStop(0, "#b3ccff");
-	linearGradient.addColorStop(1, "#1a66ff");
+	linearGradient = ctx.createLinearGradient(width / 2 - diameter3 / 2, height - 3 * offset - stage1Height - stage2Height, width / 2 + diameter3 / 2, height - 3 * offset - stage1Height - stage2Height - stage3Height);
+	linearGradient.addColorStop(1, "#4d94ff");
+	linearGradient.addColorStop(0, "#0039e6");
 	ctx.fillStyle = linearGradient;
 	ctx.fillRect(width / 2 - diameter3 / 2, height - 3 * offset - stage1Height - stage2Height, diameter3, -stage3Height * waterPercent3);
 	
 	//erase unwanted blue areas - third stage
 	ctx.fillStyle = "white";
+	ctx.strokeStyle = "white";
 	ctx.beginPath();
 	ctx.moveTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset - stage1Height - stage2Height - stage3Height + cornerRound);
 	ctx.lineTo(width / 2 - diameter3 / 2, height - 3 * offset- stage1Height - stage2Height - stage3Height + cornerRound);
@@ -247,6 +277,8 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter3 / 2 + cornerRound, height - 3 * offset- stage1Height - stage2Height - stage3Height - 2);
 	ctx.lineTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset- stage1Height - stage2Height - stage3Height - 2);
 	ctx.closePath();
+	ctx.stroke();
+	
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -256,6 +288,8 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter3 / 2 - cornerRound, height - 3 * offset- stage1Height - stage2Height - stage3Height - 2);
 	ctx.lineTo(width / 2 + diameter3 / 2 + 2, height - 3 * offset- stage1Height - stage2Height - stage3Height - 2);
 	ctx.closePath();
+	ctx.stroke();
+	
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -265,6 +299,8 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset - stage1Height - stage2Height);
 	ctx.closePath();
+	ctx.stroke();
+	
 	ctx.fill();
 	
 	ctx.beginPath();
@@ -274,6 +310,7 @@ function drawRocketBody() {
 	ctx.lineTo(width / 2 + diameter3 / 2 + 2, height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 + diameter3 / 2 + 2, height - 3 * offset - stage1Height - stage2Height);
 	ctx.closePath();
+	ctx.stroke();
 	ctx.fill();
 	
 	//third stage left side
@@ -300,7 +337,7 @@ function drawRocketBody() {
 	ctx.fillRect(width / 2 - nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height, nozzleDiam3, -nozzleHeight);
 	ctx.rect(width / 2 - nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height, nozzleDiam3, -nozzleHeight);
 	ctx.stroke();
-	
+}
 	
 	//draw x and y axes with arrows
 	ctx.beginPath();
