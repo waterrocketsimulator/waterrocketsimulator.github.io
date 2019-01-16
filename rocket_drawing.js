@@ -233,6 +233,25 @@ if (stagesNum == 2 || stagesNum == 3){
 	ctx.stroke();
 	ctx.fill();
 	
+	//interstage between 1st and 2nd stage
+	linearGradient = ctx.createLinearGradient(width / 2 - diameter2 / 2, height - offset - stage1Height, width / 2 + diameter2 / 2, height - offset - stage1Height);
+	linearGradient.addColorStop(1, "#d9d9d9");
+	linearGradient.addColorStop(0, "#999999");
+	ctx.fillStyle = linearGradient;
+	ctx.strokeStyle = "#000000";
+	ctx.beginPath();
+	ctx.moveTo(width / 2 - diameter1 / 2 + cornerRound, height - offset - stage1Height);
+	ctx.lineTo(width / 2 - diameter2 / 2, height - 2 * offset - stage1Height -nozzleHeight - neckHeight);
+	ctx.bezierCurveTo(width / 2 - diameter2 / 2, height - 2 * offset - nozzleHeight - .5 * neckHeight - stage1Height, width / 2 - nozzleDiam2 / 2, height - 2 * offset - nozzleHeight - .5 * neckHeight - stage1Height, width / 2 - nozzleDiam2 / 2, height - 2 * offset - nozzleHeight - stage1Height);
+	ctx.lineTo(width / 2 - nozzleDiam2 / 2, height - 2 * offset - stage1Height);
+	ctx.lineTo(width / 2 + nozzleDiam2 / 2, height - 2 * offset - stage1Height);
+	ctx.lineTo(width / 2 + nozzleDiam2 / 2, height - 2 * offset - stage1Height - nozzleHeight);
+	ctx.bezierCurveTo(width / 2 + nozzleDiam2 / 2, height - 2 * offset - nozzleHeight - .5 * neckHeight - stage1Height, width / 2 + diameter2 / 2, height - 2 * offset - nozzleHeight - .5 * neckHeight - stage1Height, width / 2 + diameter2 / 2,height - 2 * offset - nozzleHeight - neckHeight - stage1Height);
+	ctx.lineTo(width / 2 + diameter1 / 2 - cornerRound, height - offset - stage1Height);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+	
 	//second stage left side
 	ctx.strokeStyle = "#000000";
 	ctx.beginPath();
@@ -293,9 +312,9 @@ if (stagesNum == 3){
 	ctx.fill();
 	
 	ctx.beginPath();
-	ctx.moveTo(width / 2 - nozzleDiam2 / 2, height - 3 * offset - stage1Height - stage2Height);
-	ctx.lineTo(width / 2 - nozzleDiam2 / 2, height - 3 * offset - stage1Height - stage2Height - nozzleHeight);
-	ctx.bezierCurveTo(width / 2 - nozzleDiam2 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - diameter3 / 2,height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
+	ctx.moveTo(width / 2 - nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 - nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height - nozzleHeight);
+	ctx.bezierCurveTo(width / 2 - nozzleDiam3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - diameter3 / 2,height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 - diameter3 / 2 - 2, height - 3 * offset - stage1Height - stage2Height);
 	ctx.closePath();
@@ -304,11 +323,30 @@ if (stagesNum == 3){
 	ctx.fill();
 	
 	ctx.beginPath();
-	ctx.moveTo(width / 2 + nozzleDiam2 / 2, height - 3 * offset - stage1Height - stage2Height);
-	ctx.lineTo(width / 2 + nozzleDiam2 / 2, height - 3 * offset - stage1Height - stage2Height - nozzleHeight);
-	ctx.bezierCurveTo(width / 2 + nozzleDiam2 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2,height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
+	ctx.moveTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height - nozzleHeight);
+	ctx.bezierCurveTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2,height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 + diameter3 / 2 + 2, height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
 	ctx.lineTo(width / 2 + diameter3 / 2 + 2, height - 3 * offset - stage1Height - stage2Height);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+	
+	//interstage between 2st and 3nd stage
+	linearGradient = ctx.createLinearGradient(width / 2 - diameter3 / 2, height - 2 * offset - stage1Height - stage2Height, width / 2 + diameter2 / 2, height - 2 * offset - stage1Height- stage2Height);
+	linearGradient.addColorStop(1, "#d9d9d9");
+	linearGradient.addColorStop(0, "#999999");
+	ctx.fillStyle = linearGradient;
+	ctx.strokeStyle = "#000000";
+	ctx.beginPath();
+	ctx.moveTo(width / 2 - diameter2 / 2 + cornerRound, height - 2 * offset - stage1Height- stage2Height);
+	ctx.lineTo(width / 2 - diameter3 / 2, height - 3 * offset - stage1Height - stage2Height - nozzleHeight - neckHeight);
+	ctx.bezierCurveTo(width / 2 - diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - nozzleDiam3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 - nozzleDiam3 / 2, height - 3 * offset - nozzleHeight - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 - nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - stage1Height - nozzleHeight - stage2Height);
+	ctx.bezierCurveTo(width / 2 + nozzleDiam3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2, height - 3 * offset - nozzleHeight - .5 * neckHeight - stage1Height - stage2Height, width / 2 + diameter3 / 2, height - 3 * offset - nozzleHeight - neckHeight - stage1Height - stage2Height);
+	ctx.lineTo(width / 2 + diameter2 / 2 - cornerRound, height - 2 * offset - stage1Height - stage2Height);
 	ctx.closePath();
 	ctx.stroke();
 	ctx.fill();
