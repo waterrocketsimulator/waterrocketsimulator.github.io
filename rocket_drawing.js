@@ -10,6 +10,7 @@ function drawRocketBody() {
 	var neckHeight = .075;
 	var nozzleHeight = .0075;
 	var ltBase = .2; //launch tube base diameter
+	var widthBiggerThanHeight = false;
   
 	var diameter1 = vesselDiameter.value / 1000;
 	var diameter2 = vesselDiameter2.value / 1000;
@@ -19,17 +20,16 @@ function drawRocketBody() {
 	var nozzleDiam2 = nozzleDiameter2.value / 1000;
 	var nozzleDiam3 = nozzleDiameter3.value / 1000;
 	
-	var stage1Height = vesselCapacity.value / 1000 / (diameter1 * diameter1 * 3.14159 / 4);
-	var stage2Height = vesselCapacity2.value / 1000 / (diameter2 * diameter2 * 3.14159 / 4);
-	var stage3Height = vesselCapacity3.value / 1000 / (diameter3 * diameter3 * 3.14159 / 4);
+	var stage1Height = vesselCapacity.value / 1000 / (diameter1 * diameter1 * Math.PI / 4);
+	var stage2Height = vesselCapacity2.value / 1000 / (diameter2 * diameter2 * Math.PI / 4);
+	var stage3Height = vesselCapacity3.value / 1000 / (diameter3 * diameter3 * Math.PI / 4);
 	
 	var waterPercent1 = waterCapacity.value / vesselCapacity.value;
 	var waterPercent2 = waterCapacity2.value/ vesselCapacity2.value;
 	var waterPercent3 = waterCapacity3.value/ vesselCapacity3.value;
 	
 	var lt = launchTubeLength.value / 1000;
-	var ltPercentage = lt / stage1Height;
-	if (ltPercentage > 1) ltPercentage = 1;
+	var ltPercentage;
 	
 	if (waterPercent1 > 1) waterPercent1 = 1;
 	if (waterPercent2 > 1) waterPercent2 = 1;
@@ -61,9 +61,10 @@ function drawRocketBody() {
 			else biggestDiameter = diameter3;
 			break;
 	}
-	if (biggestDiameter * scale > width * (width - 2 * (axisOffset + 5)) / width) scale = width * (width - 2 * (axisOffset + 5)) / width / biggestDiameter;	
-	maxY *= 100; //convert maxY to cm
-	
+	if (biggestDiameter * scale > width * (width - 2 * (axisOffset + 5)) / width) {
+		scale = width * (width - 2 * (axisOffset + 5)) / width / biggestDiameter;	
+		widthBiggerThanHeight = true;
+	}
 	//scaling to canvas
 	diameter1 *= scale;
 	diameter2 *= scale;
@@ -78,13 +79,18 @@ function drawRocketBody() {
 	neckHeight *= scale;
 	nozzleHeight *= scale;
 	ltBase *= scale;
-		
+	
+	if (widthBiggerThanHeight){  //if rocket doesn't fills all height of the plot, maxY (for axis plot) must be recalculated
+	  maxY = (height - offset) / scale;
+	}
+	maxY *= 100; //convert maxY to cm	
+	
 	ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
 	ctx.setLineDash([]);
 	  	
 	console.log("waterPercent1: " + waterPercent1);
-	console.log("waterPercent * stage1Height: " + (waterPercent1 * stage1Height));
+	console.log("waterPercent * stage1Height: " + (waterPercent1 * stage1Height / scale));
 	console.log("lt: " + (lt * scale));
 	
 	//first stage water fill
@@ -168,7 +174,12 @@ function drawRocketBody() {
 	linearGradient.addColorStop(0, "#d9d9d9");
 	linearGradient.addColorStop(1, "#999999");
 	ctx.fillStyle = linearGradient;
-	ctx.fillRect(width / 2 - nozzleDiam1 / 2, height - offset, nozzleDiam1, -stage1Height * ltPercentage);
+	
+	ltPercentage = lt * scale / stage1Height;
+	if (ltPercentage > 1) ltPercentage = 1;
+	console.log("ltPercent: " + ltPercentage);
+	
+	ctx.fillRect(width / 2 - nozzleDiam1 / 2, height - offset, nozzleDiam1, - stage1Height * ltPercentage);
 	linearGradient = ctx.createLinearGradient(width / 2 - ltBase / 2, 0, width / 2 + ltBase / 2, 0);
 	linearGradient.addColorStop(0, "#d9d9d9");
 	linearGradient.addColorStop(1, "#999999");
@@ -396,15 +407,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 50000 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 50000 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 50000 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 50000, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 50000 + height - axisOffset + 3);
+			ctx.strokeText(i * 50000, 0.1 * axisOffset, - i * (height - offset) / maxY * 50000 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 50000 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 50000 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 50000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50000 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -413,15 +424,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 5000 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 5000 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 5000 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 5000, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 5000 + height - axisOffset + 3);
+			ctx.strokeText(i * 5000, 0.1 * axisOffset, - i * (height - offset) / maxY * 5000 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 5000 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 5000 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 5000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5000 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -430,15 +441,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 2500 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 2500 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 2500 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 2500, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 2500 + height - axisOffset + 3);
+			ctx.strokeText(i * 2500, 0.1 * axisOffset, - i * (height - offset) / maxY * 2500 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 2500 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 2500 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 2500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2500 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -447,15 +458,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 1000 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 1000 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 1000 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 1000, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 1000 + height - axisOffset + 3);
+			ctx.strokeText(i * 1000, 0.1 * axisOffset, - i * (height - offset) / maxY * 1000 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 1000 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 1000 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 1000 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1000 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -464,15 +475,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 500 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 500 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 500 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 500, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 500 + height - axisOffset + 3);
+			ctx.strokeText(i * 500, 0.1 * axisOffset, - i * (height - offset) / maxY * 500 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 500 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 500 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 500 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 500 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -481,15 +492,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 200 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 200 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 200 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 200, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 200 + height - axisOffset + 3);
+			ctx.strokeText(i * 200, 0.1 * axisOffset, - i * (height - offset) / maxY * 200 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 200 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 200 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 200 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 200 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -498,15 +509,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 100 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 100 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 100 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 100, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 100 + height - axisOffset + 3);
+			ctx.strokeText(i * 100, 0.1 * axisOffset, - i * (height - offset) / maxY * 100 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 100 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 100 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 100 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 100 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -515,15 +526,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 50 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 50 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 50 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 50, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 50 + height - axisOffset + 3);
+			ctx.strokeText(i * 50, 0.1 * axisOffset, - i * (height - offset) / maxY * 50 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 50 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 50 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 50 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 50 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -532,15 +543,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 25 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 25 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 25 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 25, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 25 + height - axisOffset + 3);
+			ctx.strokeText(i * 25, 0.1 * axisOffset, - i * (height - offset) / maxY * 25 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 25 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 25 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 25 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -549,15 +560,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 10 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 10 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 10 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 10, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 10 + height - axisOffset + 3);
+			ctx.strokeText(i * 10, 0.1 * axisOffset, - i * (height - offset) / maxY * 10 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 10 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 10 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 10 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 10 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -566,15 +577,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 5 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 5 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 5 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 5, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 5 + height - axisOffset + 3);
+			ctx.strokeText(i * 5, 0.1 * axisOffset, - i * (height - offset) / maxY * 5 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 5 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 5 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 5 + height - offset);
 			ctx.stroke();
 		}
 	}
@@ -583,15 +594,15 @@ if (stagesNum == 3){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
-			ctx.moveTo(axisOffset - 8, - i * (height - axisOffset) / maxY * 2 + height - axisOffset);
-			ctx.lineTo(axisOffset, - i * (height - axisOffset) / maxY * 2 + height - axisOffset);
+			ctx.moveTo(axisOffset - 8, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(axisOffset, - i * (height - offset) / maxY * 2 + height - offset);
 			ctx.stroke();
-			ctx.strokeText(i * 2, 0.1 * axisOffset, - i * (height - axisOffset) / maxY * 2 + height - axisOffset + 3);
+			ctx.strokeText(i * 2, 0.1 * axisOffset, - i * (height - offset) / maxY * 2 + height - offset + 3);
 			ctx.beginPath();
 			ctx.strokeStyle = "#999999";
 			ctx.setLineDash([10,15]);
-			ctx.moveTo(axisOffset, - i * (height - axisOffset) / maxY * 2 + height - axisOffset);
-			ctx.lineTo(width, - i * (height - axisOffset) / maxY * 2 + height - axisOffset);
+			ctx.moveTo(axisOffset, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
 			ctx.stroke();
 		}
 	}
