@@ -110,6 +110,14 @@ launchTubeLength.oninput = function(){
 	launchTubeLengthOutput.innerHTML = launchTubeLength.value;
   launch(); }
 
+var launchTubeDiameter = document.getElementById("launchTubeDiameter");
+var launchTubeDiameterOutput = document.getElementById("launchTubeDiameterValue");
+launchTubeDiameterOutput.innerHTML = launchTubeDiameter.value;
+
+launchTubeDiameter.oninput = function(){
+	launchTubeDiameterOutput.innerHTML = launchTubeDiameter.value;
+  launch(); }
+
 
 //same for stage 2
 

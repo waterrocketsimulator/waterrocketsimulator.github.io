@@ -44,25 +44,28 @@
 	  <input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity">
 			  
 	  <p>Water fill: <span id="waterCapacityValue"></span> [ l ]  (<span id="waterPercentage"></span> %)</p>
-	  <input type="range" min="0" max="60" value="6" class="slider" step="0.1" id="waterCapacity">
+	  <input type="range" min="0" max="60" value="9" class="slider" step="0.1" id="waterCapacity">
 	  
 	  <p>Rocket's dry mass: <span id="rocketDryMassValue"></span> [ kg ]</p>
-	  <input type="range" min="0.1" max="25" value="2" class="slider" step="0.1" id="rocketDryMass">
+	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass">
 	  
 	  <p>Air pressure: <span id="pressureValue"></span> [ bar ]</p>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure">
 	  
 	  <p>Drag coefficient: <span id="dragCoefficientValue"></span> [ - ]</p>
-	  <input type="range" min="0" max=".5" value="0.2" class="slider" step="0.01" id="dragCoefficient">
+	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient">
 	  
 	  <p>Rocket's diameter: <span id="vesselDiameterValue"></span> [ mm ]</p>
 	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter">
 	  
 	  <p>Nozzle diameter: <span id="nozzleDiameterValue"></span> [ mm ]</p>
-	  <input type="range" min="1" max="40" value="12" class="slider" step="0.1" id="nozzleDiameter">
+	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="nozzleDiameter">
 		
 		<p>Launch tube length: <span id="launchTubeLengthValue"></span> [ mm ]</p>
 	  <input type="range" min="0" max="5000" value="0" class="slider" step="10" id="launchTubeLength">
+		
+		<p>Launch tube diameter: <span id="launchTubeDiameterValue"></span> [ mm ]</p>
+	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="launchTubeDiameter">
 		
 		<p id="landing">Landing attempt: <span id="landingValue"></span></p>
     <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing">
@@ -75,19 +78,19 @@
 	<div class="sliderContainer" id="stage2">
 	  <h3>Stage 2</h3>
 	  <p>Vessel capacity: <span id="vesselCapacityValue2"></span> [ l ]</p>
-	  <input type="range" min="0.5" max="100" value="20" class="slider" step="0.1" id="vesselCapacity2">
+	  <input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity2">
 	  
 	  <p>Water fill: <span id="waterCapacityValue2"></span> [ l ]  (<span id="waterPercentage2"></span> %)</p>
 	  <input type="range" min="0.1" max="60" value="10" class="slider" step="0.1" id="waterCapacity2">
 	  
 	  <p>Rocket's dry mass: <span id="rocketDryMassValue2"></span> [ kg ]</p>
-	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.1" id="rocketDryMass2">
+	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass2">
 	  
 	  <p>Air pressure: <span id="pressureValue2"></span> [ bar ]</p>
-	  <input type="range" min="1" max="100" value="20" class="slider" step="0.1" id="pressure2">
+	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure2">
 	  
 	  <p>Drag coefficient: <span id="dragCoefficientValue2"></span> [ - ]</p>
-	  <input type="range" min="0" max=".5" value="0.2" class="slider" step="0.01" id="dragCoefficient2">
+	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient2">
 	  
 	  <p>Rocket's diameter: <span id="vesselDiameterValue2"></span> [ mm ]</p>
 	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter2">
@@ -105,13 +108,13 @@
 	  <input type="range" min="0.1" max="50" value="1" class="slider" step="0.1" id="waterCapacity3">
 	  
 	  <p>Rocket's dry mass: <span id="rocketDryMassValue3"></span> [ kg ]</p>
-	  <input type="range" min="0.1" max="25" value="0.3" class="slider" step="0.1" id="rocketDryMass3">
+	  <input type="range" min="0.1" max="25" value="0.4" class="slider" step="0.01" id="rocketDryMass3">
 	  
 	  <p>Air pressure: <span id="pressureValue3"></span> [ bar ]</p>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure3">
 	  
 	  <p>Drag coefficient: <span id="dragCoefficientValue3"></span> [ - ]</p>
-	  <input type="range" min="0" max=".5" value="0.1" class="slider" step="0.01" id="dragCoefficient3">
+	  <input type="range" min="0" max="1" value="0.3" class="slider" step="0.01" id="dragCoefficient3">
 	  
 	  <p>Rocket's diameter: <span id="vesselDiameterValue3"></span> [ mm ]</p>
 	  <input type="range" min="25" max="500" value="100" class="slider" step="1" id="vesselDiameter3">
@@ -122,7 +125,7 @@
   </div>
 
 
-	<div class="altitudePlot">
+	<div class="altitudePlot" id="altitudePlotCell">
 		<canvas class="plot" id="altitudePlot" width="250" height="250"></canvas>  <!--width="250" height="250"-->
 		<p>Altitude [m]</p>
 	</div>	
@@ -175,7 +178,7 @@
 		  <td>[ m/s ]</td>
 		</tr>
     <tr>
-	  	<td>Speed at MECO*</td>
+	  	<td>Speed at Burnout*</td>
 	  	<td id="speedAtMECO" class="value"></td>
 	  	<td id="speedAtMECO2" class="value2"></td>
 	  	<td id="speedAtMECO3" class="value3"></td>
@@ -196,14 +199,14 @@
 	  	<td>[ s ]</td>
 		</tr>
     <tr>
-	  	<td>Time to MECO</td>
+	  	<td>Time to Burnout</td>
   		<td id="timeToMECO" class="value"></td>
   		<td id="timeToMECO2" class="value2"></td>
   		<td id="timeToMECO3" class="value3"></td>
   		<td>[ s ]</td>
 		</tr>
     <tr>
-	  	<td>MECO altitude</td>
+	  	<td>Burnout altitude</td>
 			<td id="MECOaltitude" class="value"></td>
 			<td id="MECOaltitude2" class="value2"></td>
 			<td id="MECOaltitude3" class="value3"></td>
@@ -256,7 +259,7 @@
 </div>
 
 <div id="imprint">
-  <p>* MECO - Main Engine Cut Off - occurs when all the water escapes from the rocket</p>
+  <p>* Burnout - occurs when all the water escapes from the rocket</p>
   <p>* TWR - Thrust to Weight Ratio</p>
 	<p>WARNING:</p>
 	<ul>

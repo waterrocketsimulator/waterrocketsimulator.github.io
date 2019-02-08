@@ -34,6 +34,7 @@ launch();
 		var Vw = (waterCapacity.value) / 1000; //capacity of water (m^3)
 	  var Ar = 3.14159 * vesselDiameter.value * vesselDiameter.value / 4 / 1000000; //section area of the rocket's vessel (m^2)
     var An = 3.14159 * nozzleDiameter.value * nozzleDiameter.value / 4 / 1000000; //section area of exhaust nozzle (m^2)
+    var Alt = 3.14159 * launchTubeDiameter.value * launchTubeDiameter.value / 4 / 1000000; //section area of launch tube (m^2)
     var p = pressure.value * 100000; //air pressure in vessel (Pa)
 		var pa = 100000; //ambient pressure (it is used second time in stageIgnition(). Sorry)
 		var Cd = dragCoefficient.value;
@@ -55,7 +56,7 @@ launch();
 	  var ft = 0; //flight time (s)
 		
 		//stage 1 starts
-		var results = stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, p, Cd, m0, lt, ft, temp, currentStage);
+		var results = stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage);
 		
 		var T = results[0];
 		var ve = results[1];
@@ -103,7 +104,7 @@ launch();
 			  	m0 = parseFloat(rocketDryMass2.value) + parseFloat(rocketDryMass3.value) + (waterCapacity3.value / 1000) * ro + (pressure3.value* 100000  + pa) / (R * temp) * (vesselCapacity3.value - waterCapacity2.value) / 1000;
 				  break;
 		}
-			results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
+			results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
 		
 		  T = results[0];
 		  ve = results[1];
@@ -147,7 +148,7 @@ launch();
 			m0 = parseFloat(rocketDryMass3.value)
 			temp = 293;
 			
-		  results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
+		  results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
 		
 		  T = results[0];
 		  ve = results[1];
@@ -204,7 +205,7 @@ launch();
 }
 
  	
-function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, p, Cd, m0, lt, ft, temp, currentStage){
+function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage){
 	//physical constants for calculations
 	var waterLossFactor = 0.1; //pressure loss factor in nozzle for water flow
 	var airLossFactor = 0.5; //pressure loss factor in nozzle for air flow
@@ -265,7 +266,7 @@ if (h == 0){
  console.log("launch tube phase");
 	while (h < lt && h >= 0){
  	  p = C * Math.pow(V, -k); //air (and water) pressure decreases
-	  T = p * An;
+	  T = p * Alt;
 	  D = -.5 * Cd * roA * vr * vr * Ar;
 	 
 	  a = (T + D) / m - g;
@@ -446,9 +447,9 @@ var initialH;
 //fall back to the ground and landing- EXPERIMENTAL
 if (!simulation && land) {
   console.log('balistic fall back to the ground begins' + '\n'); 
-	vSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, p, Cd, m0, 0, 0, temp, currentStage)[6];
+	vSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[6];
 	
-	dragSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, p, Cd, m0, 0, 0, temp, currentStage)[14];
+	dragSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[14];
   if (Cd == 0) {
 		dragWorkFullAlt = 0;
 		initialH = (g * altitude - .5 * vSim * vSim) / g;
@@ -480,7 +481,7 @@ if (!simulation && land) {
 		console.log("initialH 5: " + initialH);
 	}
 	
-	//var vEnd = stageIgnition(true, false, initialH, -vSim, V, Vw, ro, Ar, An, p, Cd, m0, 0, 0, temp, currentStage)[12];
+	//var vEnd = stageIgnition(true, false, initialH, -vSim, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[12];
 	//console.log("hSim: " + hSim);
 	
   while (h > initialH){
@@ -491,7 +492,7 @@ if (!simulation && land) {
 	  ft += dt;
 		//if (-vr > topSpeed) break;
 		/*
-		if (h < initialH && stageIgnition(true, false, h, vr, V, Vw, ro, Ar, An, p, Cd, m0, 0, ft, temp, currentStage)[12] < .1){
+		if (h < initialH && stageIgnition(true, false, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, ft, temp, currentStage)[12] < .1){
 			break;
 		}*/
 	  //write data for plots

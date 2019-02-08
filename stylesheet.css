@@ -32,8 +32,8 @@ p {
 
 .globalGrid{
 	display: grid;
-	grid-template-columns: minmax(250px, 350px) minmax(255px, 400px) minmax(255px, 400px) minmax(35	0px, 500px) 300px;
-	grid-template-rows: 80px 380px 380px 380px;
+	grid-template-columns: minmax(260px, 350px) minmax(205px, 400px) minmax(205px, 400px) minmax(35	0px, 500px) 300px;
+	grid-template-rows: 80px 420px 360px 380px;
 }
 
 #stagesSlider {
@@ -78,7 +78,7 @@ p {
 .altitudePlot{
 		
 	grid-area: 2 / 2 / span 1 / span 1;
-	
+		
 }
 .velocityPlot{
 		

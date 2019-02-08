@@ -57,6 +57,12 @@ function drawAltitudePlot() {
 	var offset = 40;
 	var maxY = Math.max.apply(null, plotDataStorage.altitude);
 	var maxX = plotDataStorage.fl;
+	//var readWidth = document.getElementById("altitudePlotCell").offsetWidth;
+	//console.log("read width: " + readWidth);
+	//ctx.canvas.width = readWidth;
+	//ctx.canvas.height = window.innerHeight;
+	
+	
 	var height = altitudePlot.height;
 	var width = altitudePlot.width;
   ctx.fillStyle = "#FFFFFF";
