@@ -29,6 +29,7 @@ function drawRocketBody() {
 	var waterPercent3 = waterCapacity3.value/ vesselCapacity3.value;
 	
 	var lt = launchTubeLength.value / 1000;
+	var ltDiameter = launchTubeDiameter.value / 1000;
 	var ltPercentage;
 	
 	if (waterPercent1 > 1) waterPercent1 = 1;
@@ -79,6 +80,7 @@ function drawRocketBody() {
 	neckHeight *= scale;
 	nozzleHeight *= scale;
 	ltBase *= scale;
+	ltDiameter *= scale;
 	
 	if (widthBiggerThanHeight){  //if rocket doesn't fills all height of the plot, maxY (for axis plot) must be recalculated
 	  maxY = (height - offset) / scale;
@@ -89,18 +91,12 @@ function drawRocketBody() {
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
 	ctx.setLineDash([]);
 	  	
-	console.log("waterPercent1: " + waterPercent1);
-	console.log("waterPercent * stage1Height: " + (waterPercent1 * stage1Height / scale));
-	console.log("lt: " + (lt * scale));
-	
 	//first stage water fill
 	var ltVolume; //underwater volume of launch tube
 	if(lt * scale > waterPercent1 * stage1Height) ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * waterPercent1 * stage1Height; //launch tube displaces water and it's level rises
 	else ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * lt * scale;
 	waterPercent1 = (waterPercent1 * stage1Height * (Math.PI * diameter1 * diameter1 / 4) + ltVolume) / (Math.PI * diameter1 * diameter1 / 4) / stage1Height;
 	if (waterPercent1 > 1) waterPercent1 = 1;
-	
-	console.log("waterPercent1: " + waterPercent1);
 	
 	var linearGradient = ctx.createLinearGradient(width / 2 - diameter1 / 2, height - offset, width / 2 + diameter1 / 2, height - offset - stage1Height);
 	linearGradient.addColorStop(1, "#4d94ff");
@@ -170,7 +166,8 @@ function drawRocketBody() {
 	ctx.stroke();
 	
 	//first stage launch tube
-	linearGradient = ctx.createLinearGradient(width / 2 - nozzleDiam1 / 2, 0, width / 2 + nozzleDiam1 / 2, 0);
+	if (nozzleDiam1 < ltDiameter) ltDiameter = nozzleDiam1;
+	linearGradient = ctx.createLinearGradient(width / 2 - ltDiameter / 2, 0, width / 2 + ltDiameter / 2, 0);
 	linearGradient.addColorStop(0, "#d9d9d9");
 	linearGradient.addColorStop(1, "#999999");
 	ctx.fillStyle = linearGradient;
@@ -179,7 +176,7 @@ function drawRocketBody() {
 	if (ltPercentage > 1) ltPercentage = 1;
 	console.log("ltPercent: " + ltPercentage);
 	
-	ctx.fillRect(width / 2 - nozzleDiam1 / 2, height - offset, nozzleDiam1, - stage1Height * ltPercentage);
+	ctx.fillRect(width / 2 - ltDiameter / 2, height - offset, ltDiameter, - stage1Height * ltPercentage);
 	linearGradient = ctx.createLinearGradient(width / 2 - ltBase / 2, 0, width / 2 + ltBase / 2, 0);
 	linearGradient.addColorStop(0, "#d9d9d9");
 	linearGradient.addColorStop(1, "#999999");
