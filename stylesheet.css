@@ -25,21 +25,21 @@ h3{
 }
 
 p {
-   	font-size: 16px;
-    	text-align: center;
-	margin: 8px auto;
+    font-size: 16px;
+    text-align: center;
+	  margin: 8px auto;
 }
 
 .globalGrid{
 	display: grid;
-	grid-template-columns: minmax(260px, 350px) minmax(205px, 400px) minmax(205px, 400px) minmax(35	0px, 500px) 300px;
-	grid-template-rows: 80px 420px 360px 380px;
+	grid-template-columns: minmax(260px, 350px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(250px, 600px);
+	grid-template-rows: 80px 440px 360px 380px;
 }
 
 #stagesSlider {
 	grid-row: 1 / span 1;
 	grid-column: 3 / span 1; 
-  	width: 180px;
+  width: 180px;
 }
 
 #landing {
@@ -56,13 +56,13 @@ p {
 }
 
 #stage2 {
-    display: inline;
+  display: inline;
 	grid-row: 3 / span 1;
 	grid-column: 1 / span 1;
 }
 
 #stage3 {
-    display: inline;
+  display: inline;
 	grid-row: 4 / span 1;
 	grid-column: 1 / span 1;
 }
@@ -128,8 +128,8 @@ p {
 }
 
 table{
-  	border: 1px solid black;
-	width: 350px;
+  border: 1px solid black;
+	width: 360px;
 	font-size: 16px;    	
 	/*height: 40%;*/
     	/*margin: 10px;*/

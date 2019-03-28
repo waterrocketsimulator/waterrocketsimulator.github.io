@@ -55,16 +55,15 @@ function drawAltitudePlot() {
   var altitudePlot = document.getElementById("altitudePlot");
   var ctx = altitudePlot.getContext("2d");
 	var offset = 40;
+	var canvasOffset = 10;
 	var maxY = Math.max.apply(null, plotDataStorage.altitude);
 	var maxX = plotDataStorage.fl;
-	//var readWidth = document.getElementById("altitudePlotCell").offsetWidth;
-	//console.log("read width: " + readWidth);
-	//ctx.canvas.width = readWidth;
-	//ctx.canvas.height = window.innerHeight;
-	
-	
+	var readWidth = document.getElementById("altitudePlotCell").offsetWidth;
+	ctx.canvas.width = readWidth - canvasOffset;
+	ctx.canvas.height = readWidth - canvasOffset;
 	var height = altitudePlot.height;
 	var width = altitudePlot.width;
+	
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
   ctx.fillStyle = "#000000";
@@ -510,10 +509,15 @@ function drawVelocityPlot() {
   var velocityPlot = document.getElementById("velocityPlot");
   var ctx = velocityPlot.getContext("2d");
 	var offset = 40;
+	var canvasOffset = 10;
 	var maxY = Math.max.apply(null, plotDataStorage.velocity);
 	var maxX = plotDataStorage.fl;
+	var readWidth = document.getElementById("velocityPlotCell").offsetWidth;
+	ctx.canvas.width = readWidth - canvasOffset;
+	ctx.canvas.height = readWidth - canvasOffset;
 	var height = velocityPlot.height;
 	var width = velocityPlot.width;
+	
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
   ctx.fillStyle = "#000000";
@@ -959,10 +963,15 @@ function drawAccelerationPlot() {
   var accelerationPlot = document.getElementById("accelerationPlot");
   var ctx = accelerationPlot.getContext("2d");
 	var offset = 40;
+	var canvasOffset = 10;
 	var maxY = Math.max.apply(null, plotDataStorage.acceleration);
 	var maxX = plotDataStorage.al;
+	var readWidth = document.getElementById("accelerationPlotCell").offsetWidth;
+	ctx.canvas.width = readWidth - canvasOffset;
+	ctx.canvas.height = readWidth - canvasOffset;
 	var height = accelerationPlot.height;
 	var width = accelerationPlot.width;
+	
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, width, height); //fill backgrund of the plot with white color
   ctx.fillStyle = "#000000";
@@ -1408,8 +1417,12 @@ function drawThrustPlot() {
   var thrustPlot = document.getElementById("thrustPlot");
   var ctx = thrustPlot.getContext("2d");
 	var offset = 40;
+	var canvasOffset = 10;
 	var maxY = Math.max.apply(null, plotDataStorage.thrust);
 	var maxX = plotDataStorage.al;
+	var readWidth = document.getElementById("thrustPlotCell").offsetWidth;
+	ctx.canvas.width = readWidth - canvasOffset;
+	ctx.canvas.height = readWidth - canvasOffset;
 	var height = thrustPlot.height;
 	var width = thrustPlot.width;
   ctx.fillStyle = "#FFFFFF";
@@ -1857,8 +1870,12 @@ function drawExhaustPlot() {
   var exhaustPlot = document.getElementById("exhaustPlot");
   var ctx = exhaustPlot.getContext("2d");
 	var offset = 40;
+	var canvasOffset = 10;
 	var maxY = Math.max.apply(null, plotDataStorage.exhaust);
 	var maxX = plotDataStorage.al;
+	var readWidth = document.getElementById("altitudePlotCell").offsetWidth;
+	ctx.canvas.width = readWidth - canvasOffset;
+	ctx.canvas.height = readWidth - canvasOffset;
 	var height = exhaustPlot.height;
 	var width = exhaustPlot.width;
   ctx.fillStyle = "#FFFFFF";
