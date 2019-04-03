@@ -29,10 +29,13 @@ p {
     text-align: center;
 	  margin: 8px auto;
 }
+#numberOfStagesValue{
+	  margin-left: 1px;
+}
 
 .globalGrid{
 	display: grid;
-	grid-template-columns: minmax(260px, 350px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(250px, 600px);
+	grid-template-columns: minmax(278px, 350px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(250px, 600px);
 	grid-template-rows: 80px 440px 360px 380px;
 }
 
@@ -110,7 +113,7 @@ p {
 
 #unitsSlider {
    	display: none;
-	float: left;
+	  float: left;
    	margin-left: 20px;
    	margin-rigth: auto;
   	width: 110px;
@@ -201,41 +204,50 @@ td {
     cursor: pointer;
 }
 
-button {
-    position: relative;
-    margin: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #4CAF50;
-    border: 20px invisible white;
-    font-size: 22px;
-    color: #FFFFFF;
-    padding: 5px;
-    width: 120px;
-    height: 45px;
-    text-align: center;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.3s;
-    text-decoration: none;
-    overflow: hidden;
-    cursor: pointer;
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+	margin: 6px 1px 6px 16px;
 }
 
-button:after {
-    content: "";
-    background: #f1f1f1;
-    display: block;
-    position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px !important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 0.8s
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 280px;
+  background-color: #ffffff;
+  color: #808080;
+  text-align: left;
+  padding: 15px 15px;
+  border-radius: 6px;
+	border: 1px solid black;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  top: 0%;
+  left: 132%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 
-button:active:after {
-    padding: 0;
-    margin: 0;
-    opacity: 1;
-    transition: 0s
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 100%;
+  margin-top: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #000000 transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

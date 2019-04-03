@@ -29,7 +29,9 @@
 
 <div class="globalGrid">
 	  <div id="stagesSlider">
-	    <p>Number of stages: <span id="numberOfStagesValue"></span></p>
+	    <div class="tooltip">Number of stages: <span id="numberOfStagesValue" class="tooltip"></span>
+				<span class="tooltiptext">Multistage rockets can fly higher, but are more difficult to build</span>
+			</div>
   	  <input type="range" min="1" max="3" value="1" class="slider" step="1" id="numberOfStages">
   	</div>
 		<div id="unitsSlider">
@@ -40,31 +42,31 @@
 <!--<div class="slidersGrid">-->
   <div class="sliderContainer" id="stage1">
 	  <h3>Stage 1</h3>
-	  <p>Vessel capacity <input type="text" id="vesselCapacityValue" size="1"> [ l ]</p>
+	  <div class="tooltip">Vessel capacity<span class="tooltiptext">Volume of rocket's fuel tank. Bigger capacity means more space for water and compressed air</span> <input type="text" id="vesselCapacityValue" size="1"> [ l ]</div>
 		<input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity">
 			  
-	  <p>Water fill <input type="text" id="waterCapacityValue" size="1"> [ l ]  (<span id="waterPercentage"></span> %)</p>
+	  <div class="tooltip">Water fill <span class="tooltiptext">Water is fuel which thrown out through the nozzle propels the rocket. Although too high volume causes bigger weight needed to lift and takes overs space for compressed air. Find easily optimal value with slider</span><input type="text" id="waterCapacityValue" size="1"> [ l ]  (<span id="waterPercentage"></span> %)</div>
 	  <input type="range" min="0" max="60" value="9" class="slider" step="0.01" id="waterCapacity">
 	  
-	  <p>Rocket's dry mass <input type="text" id="rocketDryMassValue" size="1"> [ kg ]</p>
+	  <div class="tooltip">Rocket's dry mass <span class="tooltiptext">The lighter rocket is without fuel, the higher speed it can reach due to rocket equation. Mass of upper stages and it's fuel is added in calculations to dry mass in lower stages</span><input type="text" id="rocketDryMassValue" size="1"> [ kg ]</div>
 	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass">
 	  
-	  <p>Air pressure <input type="text" id="pressureValue" size="1"> [ bar ]</p>
+	  <div class="tooltip">Air pressure <span class="tooltiptext">Pressurised air fills free space in vessel and stores energy. Higher pressures requires tougher vessel</span><input type="text" id="pressureValue" size="1"> [ bar ]</div>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure">
 	  
-	  <p>Drag coefficient <input type="text" id="dragCoefficientValue" size="1"> [ - ]</p>
+	  <div class="tooltip">Drag coefficient <span class="tooltiptext">Depends on fins and nose shape. Higher coeficient results in higher drag force. Usually it is determined experimentally</span><input type="text" id="dragCoefficientValue" size="1"> [ - ]</div>
 	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient">
 	  
-	  <p>Rocket's diameter <input type="text" id="vesselDiameterValue" size="1"> [ mm ]</p>
+	  <div class="tooltip">Rocket's diameter <span class="tooltiptext">The larger rocket's diameter is the harder air drag is affecting the rocket. Wider rockets provide more volume, but smaller ones can withstand higher pressures</span><input type="text" id="vesselDiameterValue" size="1"> [ mm ]</div>
 	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter">
 	  
-	  <p>Nozzle diameter <input type="text" id="nozzleDiameterValue" size="1"> [ mm ]</p>
+	  <div class="tooltip">Nozzle diameter <span class="tooltiptext">Wider nozzle results in faster empting vessel and higher thrust force, but it generates also higher loads on rocket structure</span><input type="text" id="nozzleDiameterValue" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="nozzleDiameter">
 		
-		<p>Launch tube length <input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</p>
-	  <input type="range" min="0" max="5000" value="0" class="slider" step="10" id="launchTubeLength">
+		<div class="tooltip">Launch tube length <span class="tooltiptext">Launch tube is the most efficient way to accelerate rocket. Can be as long as the first stage vessel</span><input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</div>
+	  <input type="range" min="0" max="5000" value="0" class="slider" step="1" id="launchTubeLength">
 		
-		<p>Launch tube diam. <input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</p>
+		<div class="tooltip">Launch tube diam. <span class="tooltiptext">Bigger is always better - generates more thrust, but lunch tube can has at most same diameter as nozzle</span><input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="launchTubeDiameter">
 		
 		<p id="landing">Landing attempt: <span id="landingValue"></span></p>
@@ -76,49 +78,49 @@
 	
 	<div class="sliderContainer" id="stage2">
 	  <h3>Stage 2</h3>
-	  <p>Vessel capacity <input type="text" id="vesselCapacityValue2" size="1"> [ l ]</p>
+	  <div class="tooltip">Vessel capacity <input type="text" id="vesselCapacityValue2" size="1"> [ l ]</div>
 		<input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity2">
 			  
-	  <p>Water fill <input type="text" id="waterCapacityValue2" size="1"> [ l ]  (<span id="waterPercentage2"></span> %)</p>
+	  <div class="tooltip">Water fill <input type="text" id="waterCapacityValue2" size="1"> [ l ]  (<span id="waterPercentage2"></span> %)</div>
 	  <input type="range" min="0" max="60" value="10" class="slider" step="0.01" id="waterCapacity2">
 	  
-	  <p>Rocket's dry mass <input type="text" id="rocketDryMassValue2" size="1"> [ kg ]</p>
+	  <div class="tooltip">Rocket's dry mass <input type="text" id="rocketDryMassValue2" size="1"> [ kg ]</div>
 	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass2">
 	  
-	  <p>Air pressure <input type="text" id="pressureValue2" size="1"> [ bar ]</p>
+	  <div class="tooltip">Air pressure <input type="text" id="pressureValue2" size="1"> [ bar ]</div>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure2">
 	  
-	  <p>Drag coefficient <input type="text" id="dragCoefficientValue2" size="1"> [ - ]</p>
+	  <div class="tooltip">Drag coefficient <input type="text" id="dragCoefficientValue2" size="1"> [ - ]</div>
 	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient2">
 	  
-	  <p>Rocket's diameter <input type="text" id="vesselDiameterValue2" size="1"> [ mm ]</p>
+	  <div class="tooltip">Rocket's diameter <input type="text" id="vesselDiameterValue2" size="1"> [ mm ]</div>
 	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter2">
 	  
-	  <p>Nozzle diameter <input type="text" id="nozzleDiameterValue2" size="1"> [ mm ]</p>
+	  <div class="tooltip">Nozzle diameter <input type="text" id="nozzleDiameterValue2" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="12" class="slider" step="0.1" id="nozzleDiameter2">
   </div>
 	
 	<div class="sliderContainer" id="stage3">
 	  <h3>Stage 3</h3>
-	  <p>Vessel capacity <input type="text" id="vesselCapacityValue3" size="1"> [ l ]</p>
+	  <div class="tooltip">Vessel capacity <input type="text" id="vesselCapacityValue3" size="1"> [ l ]</div>
 		<input type="range" min="0.5" max="100" value="2" class="slider" step="0.1" id="vesselCapacity3">
 			  
-	  <p>Water fill <input type="text" id="waterCapacityValue3" size="1"> [ l ]  (<span id="waterPercentage3"></span> %)</p>
+	  <div class="tooltip">Water fill <input type="text" id="waterCapacityValue3" size="1"> [ l ]  (<span id="waterPercentage3"></span> %)</div>
 	  <input type="range" min="0" max="60" value="1" class="slider" step="0.01" id="waterCapacity3">
 	  
-	  <p>Rocket's dry mass <input type="text" id="rocketDryMassValue3" size="1"> [ kg ]</p>
+	  <div class="tooltip">Rocket's dry mass <input type="text" id="rocketDryMassValue3" size="1"> [ kg ]</div>
 	  <input type="range" min="0.1" max="25" value="0.4" class="slider" step="0.01" id="rocketDryMass3">
 	  
-	  <p>Air pressure <input type="text" id="pressureValue3" size="1"> [ bar ]</p>
+	  <div class="tooltip">Air pressure <input type="text" id="pressureValue3" size="1"> [ bar ]</div>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure3">
 	  
-	  <p>Drag coefficient <input type="text" id="dragCoefficientValue3" size="1"> [ - ]</p>
+	  <div class="tooltip">Drag coefficient <input type="text" id="dragCoefficientValue3" size="1"> [ - ]</div>
 	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient3">
 	  
-	  <p>Rocket's diameter <input type="text" id="vesselDiameterValue3" size="1"> [ mm ]</p>
+	  <div class="tooltip">Rocket's diameter <input type="text" id="vesselDiameterValue3" size="1"> [ mm ]</div>
 	  <input type="range" min="25" max="500" value="100" class="slider" step="1" id="vesselDiameter3">
 	  
-	  <p>Nozzle diameter <input type="text" id="nozzleDiameterValue3" size="1"> [ mm ]</p>
+	  <div class="tooltip">Nozzle diameter <input type="text" id="nozzleDiameterValue3" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="10" class="slider" step="0.1" id="nozzleDiameter3">
 	   
   </div>
