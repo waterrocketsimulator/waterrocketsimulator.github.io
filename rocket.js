@@ -255,9 +255,7 @@ function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m
 		console.log("lt: " + lt + '\n');
 		console.log('\n');
     
-    var outputT = T;
-    var outputve = ve;
-    var outputa = a;
+    var firstLoop = true;
 	
 //calculation loop - acceleration on launch tube phase
 if (h == 0){ 
@@ -278,6 +276,14 @@ if (h == 0){
 		V += vr * dt * An; //air volume increases
 	  temp = tempI * Math.pow(((p + pa) / pI), ((k-1)/k)); //temperature of air dercreases due to adiabatic process
 		
+		//write data for results table
+		if (firstLoop){
+			  var outputT = T;
+        var outputve = ve;
+    		var outputa = a;
+			  TWR = T / (g * m);
+				firstLoop = false;
+		}
 		//write data for plots
 	  if (!simulation){
       plotDataStorage.altitude.push(h);
@@ -313,7 +319,15 @@ while (m > m0 + mA){
 	h += vr * dt;
 	ft += dt;
 	ascentDragWork -= D * vr * dt;
-		
+	
+	//write data for results table
+		if (firstLoop){
+			  var outputT = T;
+        var outputve = ve;
+    		var outputa = a;
+			  TWR = T / (g * m);
+				firstLoop = false;
+		}
 	//write data for plots
 	if (!simulation){
     plotDataStorage.altitude.push(h);
