@@ -276,14 +276,6 @@ if (h == 0){
 		V += vr * dt * An; //air volume increases
 	  temp = tempI * Math.pow(((p + pa) / pI), ((k-1)/k)); //temperature of air dercreases due to adiabatic process
 		
-		//write data for results table
-		if (firstLoop){
-			  var outputT = T;
-        var outputve = ve;
-    		var outputa = a;
-			  TWR = T / (g * m);
-				firstLoop = false;
-		}
 		//write data for plots
 	  if (!simulation){
       plotDataStorage.altitude.push(h);
