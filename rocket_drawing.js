@@ -95,8 +95,8 @@ function drawRocketBody() {
 	  	
 	//first stage water fill
 	var ltVolume; //underwater volume of launch tube
-	if(lt * scale > waterPercent1 * stage1Height) ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * waterPercent1 * stage1Height; //launch tube displaces water and it's level rises
-	else ltVolume = Math.PI * nozzleDiam1 * nozzleDiam1 / 4 * lt * scale;
+	if(lt * scale > waterPercent1 * stage1Height) ltVolume = Math.PI * ltDiameter * ltDiameter / 4 * waterPercent1 * stage1Height; //launch tube displaces water and it's level rises
+	else ltVolume = Math.PI * ltDiameter * ltDiameter / 4 * lt * scale;
 	waterPercent1 = (waterPercent1 * stage1Height * (Math.PI * diameter1 * diameter1 / 4) + ltVolume) / (Math.PI * diameter1 * diameter1 / 4) / stage1Height;
 	if (waterPercent1 > 1) waterPercent1 = 1;
 	
