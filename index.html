@@ -64,12 +64,17 @@
 	  <div class="tooltip">Nozzle diameter <span class="tooltiptext">Wider nozzle results in faster empting vessel and higher thrust force, but it generates also higher loads on rocket structure</span><input type="text" id="nozzleDiameterValue" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="nozzleDiameter">
 		
-	  <div class="tooltip">Launch tube length <span class="tooltiptext">Launch tube is the most efficient way to accelerate rocket. Can be as long as the first stage vessel</span><input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</div>
+		<div class="tooltip">Launch tube length <span class="tooltiptext">Launch tube is the most efficient way to accelerate rocket. Can be as long as the first stage vessel</span><input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</div>
 	  <input type="range" min="0" max="5000" value="0" class="slider" step="1" id="launchTubeLength">
 		
-	  <div class="tooltip">Launch tube diam. <span class="tooltiptext">Bigger is always better - generates more thrust, but lunch tube can has at most same diameter as nozzle</span><input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</div>
+		<div class="tooltip">Launch tube diam. <span class="tooltiptext">Bigger is always better - generates more thrust, but lunch tube can has at most same diameter as nozzle</span><input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</div>
 	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="launchTubeDiameter">
 		
+		<div class="tooltip">Landing attempt: <span class="tooltiptext">This is test of tooltip</span><span id="landingValue1"></span></div>
+    <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing1">
+		
+		<p class="tooltip">Water reserve for landing: <input type="text" id="reserveValue1" size="1"> [ % ]</p>
+	  <input type="range" min=".1" max="=90" value="30.1" class="slider" step=".1" id="reserve1">
   </div>
 	
 	<div class="sliderContainer" id="stage2">

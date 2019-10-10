@@ -142,6 +142,32 @@ launchTubeDiameterOutput.onchange = function(){
 	launch();
 }
 
+var landing1 = document.getElementById("landing1");
+var landingOutput1 = document.getElementById("landingValue1");
+if (landing1.value == 0) landingOutput1.innerHTML = "no";
+else landingOutput1.innerHTML = "yes";
+
+landing1.oninput = function(){
+	if (landing1.value == 0) landingOutput1.innerHTML = "no";
+  else landingOutput1.innerHTML = "yes";
+  launch(); 
+	console.log("landing1: " + landing1.value);
+}
+
+var reserve1 = document.getElementById("reserve1");
+var reserveOutput1 = document.getElementById("reserveValue1");
+reserveOutput1.value = reserve1.value;
+
+reserve1.oninput = function(){
+	reserveOutput1.value = reserve1.value;
+  launch(); 
+}
+
+reserveOutput1.onchange = function(){
+	reserve1.value = reserveOutput1.value;
+	launch();
+}
+
 
 //same for stage 2
 
