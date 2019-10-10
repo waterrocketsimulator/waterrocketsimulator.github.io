@@ -142,7 +142,7 @@ launchTubeDiameterOutput.onchange = function(){
 	launch();
 }
 
-var landing1 = document.getElementById("landing1");
+/*var landing1 = document.getElementById("landing1");
 var landingOutput1 = document.getElementById("landingValue1");
 if (landing1.value == 0) landingOutput1.innerHTML = "no";
 else landingOutput1.innerHTML = "yes";
@@ -166,7 +166,7 @@ reserve1.oninput = function(){
 reserveOutput1.onchange = function(){
 	reserve1.value = reserveOutput1.value;
 	launch();
-}
+}*/
 
 
 //same for stage 2

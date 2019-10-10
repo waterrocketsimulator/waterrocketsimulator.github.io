@@ -32,12 +32,12 @@ launch();
 		var stagesNum = parseInt(numberOfStages.value);
 		var currentStage = 1;
 		var land = false;
-		if (landing1.value == 1){
+		/*if (landing1.value == 1){
 			land = true;
 			plotDataStorage.landing1 = true;
-		}
+		}*/
 		var simulation = false;
-		var reserve = reserve1.value;
+		var reserve = .5;
 		//initial conditions		
 	  var h = 0; //rocket's hight over ground
 		var vr = 0; //rocket's velocity - depends of stage (m/s)
