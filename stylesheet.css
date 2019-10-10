@@ -45,13 +45,6 @@ p {
   width: 180px;
 }
 
-#landing {
-	display: none;
-}
-
-#reserve {
-	display: none;
-}
 
 #stage1{
 	grid-row: 2 / span 1;
