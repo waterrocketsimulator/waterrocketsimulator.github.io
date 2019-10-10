@@ -39,7 +39,7 @@ p {
 .globalGrid{
 	display: grid;
 	grid-template-columns: minmax(278px, 300px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(180px, 350px);
-	grid-template-rows: 80px 420px 440px 440px;
+	grid-template-rows: 80px 430px 440px 440px;
 }
 
 @media only screen and (max-width: 768px) {
