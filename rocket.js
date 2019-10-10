@@ -1,14 +1,21 @@
 //object to store flightdata, for plots
 var plotDataStorage = {
+	dt : 0, //time step
 	fl : 0, //whole flight length in seconds
 	al : 0, //acceleration length in seconds
-	altitude : [0],
-	altitudeExp : [0],
-	velocityExp : [0],
-	velocity : [0],
+	altitude1 : [],
+	altitude1Time : [],
+	altitude2 : [],
+	altitude3 : [],
+	altitudeExp : [],
+	velocityExp : [],
+	velocity : [],
 	acceleration : [],
 	thrust : [],
 	exhaust : [],
+	landing1 : false,
+	landing2 : false,
+	landing3 : false,
 	landingAltitude1 : [],
 	landingVelocity1 : [],
 	landingAltitude2 : [],
@@ -25,12 +32,16 @@ launch();
 		var stagesNum = parseInt(numberOfStages.value);
 		var currentStage = 1;
 		var land = false;
-		if (landing.value == 1) land = true;
+		if (landing1.value == 1){
+			land = true;
+			plotDataStorage.landing1 = true;
+		}
 		var simulation = false;
+		var reserve = reserve1.value;
 		//initial conditions		
 	  var h = 0; //rocket's hight over ground
 		var vr = 0; //rocket's velocity - depends of stage (m/s)
-		var V = (vesselCapacity.value - waterCapacity.value) / 1000;
+		var V = (vesselCapacity.value - waterCapacity.value) / 1000; //volume of air inside the vessel
 		var Vw = (waterCapacity.value) / 1000; //capacity of water (m^3)
 	  var Ar = 3.14159 * vesselDiameter.value * vesselDiameter.value / 4 / 1000000; //section area of the rocket's vessel (m^2)
     var An = 3.14159 * nozzleDiameter.value * nozzleDiameter.value / 4 / 1000000; //section area of exhaust nozzle (m^2)
@@ -56,7 +67,7 @@ launch();
 	  var ft = 0; //flight time (s)
 		
 		//stage 1 starts
-		var results = stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage);
+		var results = stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage, reserve);
 		
 		var T = results[0];
 		var ve = results[1];
@@ -89,6 +100,11 @@ launch();
 		if (stagesNum >= 2){ 
 			//stage 2 starts
 			currentStage = 2;
+			if (landing2.value == 1){
+				land = true;
+				plotDataStorage.landing2 = true;
+		  }
+			else land = false;
 			V = (vesselCapacity2.value - waterCapacity2.value) / 1000;
 	  	Vw = (waterCapacity2.value) / 1000; //capacity of water (m^3)
 			Ar = 3.14159 * vesselDiameter2.value * vesselDiameter2.value / 4 / 1000000; //section area of the rocket's vessel in m^2
@@ -103,8 +119,9 @@ launch();
 		  	case 3:
 			  	m0 = parseFloat(rocketDryMass2.value) + parseFloat(rocketDryMass3.value) + (waterCapacity3.value / 1000) * ro + (pressure3.value* 100000  + pa) / (R * temp) * (vesselCapacity3.value - waterCapacity2.value) / 1000;
 				  break;
-		}
-			results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
+			}
+			reserve = reserve2.value;
+			results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage, reserve);
 		
 		  T = results[0];
 		  ve = results[1];
@@ -139,6 +156,11 @@ launch();
 		if (stagesNum >= 3){ 
 			//stage 3 starts
 			currentStage = 3;
+			if (landing3.value == 1){
+				land = true;
+				plotDataStorage.landing3 = true;
+		  }
+			else land = false;
 			V = (vesselCapacity3.value - waterCapacity3.value) / 1000;
 	  	Vw = (waterCapacity3.value) / 1000; //capacity of water (m^3)
 			Ar = 3.14159 * vesselDiameter3.value * vesselDiameter3.value / 4 / 1000000; //section area of the rocket's vessel in m^2
@@ -148,7 +170,7 @@ launch();
 			m0 = parseFloat(rocketDryMass3.value)
 			temp = 293;
 			
-		  results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage);
+		  results = stageIgnition(simulation, land, airPulseEndAltitude, topSpeed, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, airPulseEnd, temp, currentStage, reserve);
 		
 		  T = results[0];
 		  ve = results[1];
@@ -181,31 +203,40 @@ launch();
 			  
 		//generating plots for h, v, a, T
 		drawPlots();
-				
+		
+		console.log("alt data: " + plotDataStorage.altitude1.length);
+		console.log("landing alt data: " + plotDataStorage.landingAltitude1.length);
+		console.log("alt exp data: " + plotDataStorage.altitudeExp.length);
 		console.log("vr data: " + plotDataStorage.velocity.length);
 		console.log("vr exp data: " + plotDataStorage.velocityExp.length);
 		console.log("a data: " + plotDataStorage.acceleration.length);
 		console.log("T data: " + plotDataStorage.thrust.length);
 		console.log("ve data: " + plotDataStorage.exhaust.length);
-		console.log("alt data: " + plotDataStorage.altitude.length);
-		console.log("alt exp data: " + plotDataStorage.altitudeExp.length);
-	
+
 		
 		//clear data in the end
-		plotDataStorage.altitude = [0];
-		plotDataStorage.velocity = [0];
-		plotDataStorage.acceleration = [0];
-		plotDataStorage.thrust = [0];
-		plotDataStorage.exhaust = [0];
+		plotDataStorage.altitude1 = [];
+		plotDataStorage.altitude2 = [];
+		plotDataStorage.altitude3 = [];
+		plotDataStorage.velocity = [];
+		plotDataStorage.acceleration = [];
+		plotDataStorage.thrust = [];
+		plotDataStorage.exhaust = [];
+		plotDataStorage.landingAltitude1 = [];
+		plotDataStorage.landingVelocity1 = [];
+		plotDataStorage.landingAltitude2 = [];
+		plotDataStorage.landingVelocity2 = [];
+		plotDataStorage.landingAltitude3 = [];
+		plotDataStorage.landingVelocity3 = [];
 		
-		plotDataStorage.altitudeExp = [0];
-		plotDataStorage.velocityExp = [0];
+		plotDataStorage.altitudeExp = [];
+		plotDataStorage.velocityExp = [];
 		
 		console.log("------------------" + '\n');
 }
 
  	
-function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage){
+function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, temp, currentStage, reserve){
 	//physical constants for calculations
 	var waterLossFactor = 0.1; //pressure loss factor in nozzle for water flow
 	var airLossFactor = 0.5; //pressure loss factor in nozzle for air flow
@@ -226,36 +257,33 @@ function stageIgnition(simulation, land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m
 	var roAp = mA / V; //pressurised air density (kg/m^3)
 	var m = m0 + (Vw * ro) + mA; //mass of rocket with water and air;
   var lastM; //mass from previous loop iteration (kg)
-	var dt = 0.001 //time step
+	var dt = 0.001; //time step
 	var dm = An * ro * Math.sqrt(2 * p / ro) * dt; //mass decrease in first step of loop (kg)
-  var T = ve * dm / dt; //thrust force (N)
+  var T = ve * dm / dt + p * (1 - waterLossFactor) * An; //thrust force (N)
 	var Isp = T * dt / (g * dm); //specific impulse (s)
-	var TWR = T / (g * m0); //thrust to weight ratio (-)
-  var a = T / m - g; //acceleration (m/s^2)
+	var TWR = T / (g * m); //thrust to weight ratio (-)
+	var a = T / m - g; //acceleration (m/s^2)
 	var M = 1; //Mach number
 	var Mol = 28.96; //molecylar mass of dry air - cold air is really dry
 	var stagesNum = parseInt(numberOfStages.value);
 	var ascentDragWork = 0;
 	
-		console.log("air mass: " + mA);
-		console.log("air density: " + roA);
-		console.log("pressurised air density: " + roAp);
-		console.log("air temp [Celcius]: " + (temp - 273));
-		console.log("m: " + m);
-		console.log("dm: " + dm);
-		console.log("m0: " + m0);
-		console.log("p: " + p);
-		console.log("hw: " + hw);
-		console.log("ve: " + ve);
-		console.log("V: " + V);
-		console.log("h: " + h);
-		console.log("vr: " + vr);
-		console.log("ft: " + ft);
-		console.log("T: " + T);
-		console.log("lt: " + lt + '\n');
-		console.log('\n');
+	console.log("air mass: " + mA);
+	console.log("air density: " + roA);
+	console.log("pressurised air density: " + roAp);
+	console.log("air temp [Celcius]: " + (temp - 273));
+	console.log("m: " + m);
+	console.log("m0: " + m0);
+	console.log("p: " + p);
+	console.log("hw: " + hw);
+	console.log("ve: " + ve);
+	console.log("h: " + h);
+	console.log("vr: " + vr);
+	console.log("ft: " + ft);
+	console.log("T: " + T);
+	console.log('\n');
     
-    var firstLoop = true;
+  var firstLoop = true;
 	
 //calculation loop - acceleration on launch tube phase
 if (h == 0){ 
@@ -278,9 +306,10 @@ if (h == 0){
 		
 		//write data for plots
 	  if (!simulation){
-      plotDataStorage.altitude.push(h);
+      plotDataStorage.altitude1.push(h);
+      plotDataStorage.altitude1Time.push(ft);
       plotDataStorage.velocity.push(vr);
-      plotDataStorage.acceleration.push(a);
+      plotDataStorage.acceleration.push(a/g);
       plotDataStorage.thrust.push(T);
       plotDataStorage.exhaust.push(vr);
 		}
@@ -313,33 +342,34 @@ while (m > m0 + mA){
 	ascentDragWork -= D * vr * dt;
 	
 	//write data for results table
-		if (firstLoop){
+	if (firstLoop){
 			  var outputT = T;
         var outputve = ve;
-    		var outputa = a;
-			  TWR = T / (g * m);
+    		var outputa = a/g;
+				TWR = T / (g * m);
 				firstLoop = false;
-		}
+	}
 	//write data for plots
 	if (!simulation){
-    plotDataStorage.altitude.push(h);
+    
+		plotDataStorage.altitude1.push(h);
+    plotDataStorage.altitude1Time.push(ft);
     plotDataStorage.velocity.push(vr);
-    plotDataStorage.acceleration.push(a);
+    plotDataStorage.acceleration.push(a/g);
     plotDataStorage.thrust.push(T);
     plotDataStorage.exhaust.push(ve);
 	}
-	if (land && Vw < Vwi * reserve.value / 100){
+	if (land && Vw < Vwi * reserve / 100){
 	  break;
 	} 
 }
 console.log("vr: " + vr);
 console.log("h: " + h);
+console.log("m: " + m);
 console.log('\n');
 
 
 //calculation loop - air pulse phase after all the water escapes
-console.log("air pulse phase after all the water escapes");
-console.log("\n");
 
 var speedAtMECO = vr; //value to calculate delta v of air pulse
 var topSpeed = vr;
@@ -353,6 +383,8 @@ var tempE; //temperature of air at exhaust nozzle - it decreases due to flow acc
 var roApE; //density of air pressurised at exhaust nozzle - it also changes
 
 if(!land){
+ console.log("air pulse phase after all the water escapes");
+ console.log("\n");
  while (a > 0 && mA > 0){
 	roAp = mA / V; //pressurised air density (kg/m^3)
   ve = Math.sqrt(temp * R * 2 * k / (k - 1) * (1 - Math.pow((pa / (p + pa)), ((k - 1) / k)))); //exhaust velocity from De Laval nozzle equation
@@ -387,9 +419,10 @@ if(!land){
 	
   //write data for plots
 	if (!simulation){
-    plotDataStorage.altitude.push(h);
-    plotDataStorage.velocity.push(vr);
-    plotDataStorage.acceleration.push(a);
+    plotDataStorage.altitude1.push(h);
+    plotDataStorage.altitude1Time.push(ft);
+		plotDataStorage.velocity.push(vr);
+    plotDataStorage.acceleration.push(a/g);
     plotDataStorage.thrust.push(T);
     plotDataStorage.exhaust.push(ve);
 	}
@@ -426,21 +459,27 @@ if(!simulation){
 	 
 	//write data for plots
 	if (!simulation && currentStage == stagesNum){
-    plotDataStorage.altitude.push(h);
-    plotDataStorage.velocity.push(vr);
+    plotDataStorage.altitude1.push(h);
+    plotDataStorage.altitude1Time.push(ft);
+		plotDataStorage.velocity.push(vr);
     //plotDataStorage.acceleration.push(a);
     //plotDataStorage.thrust.push(T);
 	}
 	if (h > 3 && h < 3.2) console.log("at h: " + h + " vr: " + vr);
  }
 }
+plotDataStorage.dt = dt; //insert dt value in object that stores data for plots to properly calculate time scale on x axis
  
 console.log('\n');
 console.log("air temperature (C): " + (temp - 273));
 console.log("airPulseEnd: " + airPulseEnd + " s");
 console.log("airPulseEndAltitude: " + airPulseEndAltitude);
+console.log("ft: " + ft);
 console.log("------" + '\n');
 
+
+
+//fall back to the ground and landing- EXPERIMENTAL
 var altitude = h;
 var apogeeTime = ft;
 var vSim;
@@ -449,13 +488,11 @@ var dragWorkToSubtract;
 var dragSim;
 var initialH;
 
-
-//fall back to the ground and landing- EXPERIMENTAL
 if (!simulation && land) {
   console.log('balistic fall back to the ground begins' + '\n'); 
-	vSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[6];
+	vSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage, reserve)[6];
 	
-	dragSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[14];
+	dragSim = stageIgnition(true, false, 0, 0, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage, reserve)[14];
   if (Cd == 0) {
 		dragWorkFullAlt = 0;
 		initialH = (g * altitude - .5 * vSim * vSim) / g;
@@ -487,7 +524,7 @@ if (!simulation && land) {
 		console.log("initialH 5: " + initialH);
 	}
 	
-	//var vEnd = stageIgnition(true, false, initialH, -vSim, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage)[12];
+	//var vEnd = stageIgnition(true, false, initialH, -vSim, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, 0, temp, currentStage, reserve)[12];
 	//console.log("hSim: " + hSim);
 	
   while (h > initialH){
@@ -498,12 +535,13 @@ if (!simulation && land) {
 	  ft += dt;
 		//if (-vr > topSpeed) break;
 		/*
-		if (h < initialH && stageIgnition(true, false, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, ft, temp, currentStage)[12] < .1){
+		if (h < initialH && stageIgnition(true, false, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, 0, ft, temp, currentStage, reserve)[12] < .1){
 			break;
 		}*/
 	  //write data for plots
   	if (stagesNum == currentStage){
       plotDataStorage.landingAltitude1.push(h);
+      plotDataStorage.altitude1Time.push(ft);
       plotDataStorage.landingVelocity1.push(-vr);
       //plotDataStorage.acceleration.push(a);
       //plotDataStorage.thrust.push(T);
@@ -514,14 +552,13 @@ if (!simulation && land) {
 	console.log("drag Work To Subtract: " + dragWorkToSubtract);
 	console.log("potetnial energy at apogee: " + (altitude * m * g));
 	console.log("potetnial energy at reignition: " + (initialH * m * g));
-	console.log("kinetic energy: " + (.5 * m * vr * vr));
-	console.log("vr at reignition: " + vr);
+	console.log("kinetic energy at reignition: " + (.5 * m * vr * vr));
 	console.log("vSim: " + vSim);
-	console.log("m: " + m);
+	console.log("vr at reignition: " + vr);
+		
 	
-	
-	//calculation loop - water decceleration phase
-  console.log("water decceleration phase started at: " + h + " meters"); 
+	//calculation loop - water deceleration phase
+  console.log("water deceleration phase started at: " + h + " meters"); 
   console.log("\n");
   while (m > m0 + mA){
 		ve = Math.sqrt(2 * p * (1 - waterLossFactor) / ro); //water loss factor couses pressure drop
@@ -594,13 +631,14 @@ if (!simulation && land) {
 	}
  }
 	
-console.log("initial h: " + initialH);
 console.log("thrust ended at altitude: " + h);
-console.log("with vertival velocity: " + vr);
+console.log("with vertical velocity: " + vr);
 	
 }
 
 plotDataStorage.fl = ft;
+apogeeTime = ft;
+
 /*
 for(i = 0; i < 38; i++){
   plotDataStorage.altitudeExp.push(0)
@@ -655,7 +693,7 @@ for(i = 0; i < 5; i++){
 for(i = 0; i < 1; i++){
   plotDataStorage.altitudeExp.push(1.51)
 }
-for(i = 0; i < plotDataStorage.altitude.length - 42; i++){
+for(i = 0; i < plotDataStorage.altitude1.length - 42; i++){
   plotDataStorage.altitudeExp.push(1.586)
 }
 
@@ -678,7 +716,7 @@ for(i = 0; i < 5; i++){
 for(i = 0; i < 5; i++){
   plotDataStorage.velocityExp.push(68.49)
 }
-for(i = 0; i < plotDataStorage.altitude.length - 42; i++){
+for(i = 0; i < plotDataStorage.altitude1.length - 42; i++){
   plotDataStorage.velocityExp.push(78.77)
 }
 

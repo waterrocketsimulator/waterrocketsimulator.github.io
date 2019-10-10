@@ -52,12 +52,13 @@ function drawVelocityExperiment() {
 }
 
 function drawAltitudePlot() {
+	var stagesNum = parseInt(numberOfStages.value);
   var altitudePlot = document.getElementById("altitudePlot");
   var ctx = altitudePlot.getContext("2d");
 	var offset = 40;
 	var canvasOffset = 10;
-	var maxY = Math.max.apply(null, plotDataStorage.altitude);
-	var maxX = plotDataStorage.fl;
+	var maxY = Math.max.apply(null, plotDataStorage.altitude1);
+	var maxX = (plotDataStorage.altitude1.length + plotDataStorage.landingAltitude1.length) * plotDataStorage.dt;
 	var readWidth = document.getElementById("altitudePlotCell").offsetWidth;
 	ctx.canvas.width = readWidth - canvasOffset;
 	ctx.canvas.height = readWidth - canvasOffset;
@@ -476,8 +477,8 @@ function drawAltitudePlot() {
 			ctx.stroke();
 		}
 	}
-	if (maxY < 10){
-		for (i = 1; i < maxY * 5; i++){
+	if (maxY > 8 && maxY < 10){
+		for (i = 1; i < maxY * 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			ctx.strokeStyle = "#000000";
@@ -493,15 +494,82 @@ function drawAltitudePlot() {
 			ctx.stroke();
 		}
 	}
+	if (maxY > 4 && maxY < 8){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, 0.1 * offset, - i * (height - offset) / maxY * 1 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	if (maxY > 2 && maxY < 4){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 0.5, 0.1 * offset, - i * (height - offset) / maxY * 0.5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	if (maxY > 0 && maxY < 2){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 0.25, 0.1 * offset, - i * (height - offset) / maxY * 0.25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.stroke();
+		}
+	}
 	
 	ctx.beginPath();	
 	ctx.moveTo(offset, height - offset);
 	ctx.strokeStyle = "#000000";
 	ctx.setLineDash([]);
 	
-	for (i = 0; i < plotDataStorage.altitude.length; i++){
-	  ctx.lineTo(i * (width - offset) / (plotDataStorage.altitude.length) + offset, height - plotDataStorage.altitude[i] * (height - offset) / maxY - offset);
+	//ascending line of stage 1
+	for (i = 0; i < plotDataStorage.altitude1.length; i++){
+	  ctx.lineTo(i * (width - offset) / (maxX / plotDataStorage.dt) + offset, height - plotDataStorage.altitude1[i] * (height - offset) / maxY - offset);
 	}
+	//ascending line of stage 2
+	ctx.moveTo(offset + plotDataStorage.altitude1.length * plotDataStorage.dt / maxX * (width - offset), height - offset - plotDataStorage.altitude2[0] / maxY * (height - offset));
+	for (i = 0; i < plotDataStorage.altitude2.length; i++){
+	  ctx.lineTo(i * (width - offset - plotDataStorage.altitude1.length * plotDataStorage.dt / maxX * (width - offset)) / (plotDataStorage.altitude2.length) + offset, height - plotDataStorage.altitude2[i] * (height - offset) / maxY - offset);
+	}
+	
+	//descending line of stage 1
+	ctx.moveTo(offset + plotDataStorage.altitude1.length * plotDataStorage.dt / maxX * (width - offset), height - offset - plotDataStorage.landingAltitude1[0] / maxY * (height - offset));
+	for (i = 0; i < plotDataStorage.landingAltitude1.length; i++){
+	  ctx.lineTo(width - (plotDataStorage.landingAltitude1.length * plotDataStorage.dt) / maxX * (width - offset) + i * plotDataStorage.landingAltitude1.length * plotDataStorage.dt / maxX * (width - offset) / plotDataStorage.landingAltitude1.length, height - offset - plotDataStorage.landingAltitude1[i] / maxY * (height - offset))
+	}
+		
+	
 	ctx.stroke();
 }
 
@@ -1384,7 +1452,7 @@ function drawAccelerationPlot() {
 			ctx.stroke();
 		}
 	}
-	if (maxY < 10){
+	if (maxY > 8 && maxY < 10){
 		for (i = 1; i < maxY * 2; i++){
 			ctx.beginPath();
 			ctx.setLineDash([]);
@@ -1398,6 +1466,59 @@ function drawAccelerationPlot() {
 			ctx.setLineDash([10,15]);
 			ctx.moveTo(offset, - i * (height - offset) / maxY * 2 + height - offset);
 			ctx.lineTo(width, - i * (height - offset) / maxY * 2 + height - offset);
+			ctx.stroke();
+		}
+	}
+	if (maxY > 4 && maxY < 8){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 1, 0.1 * offset, - i * (height - offset) / maxY * 1 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 1 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	if (maxY > 2 && maxY < 4){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 0.5, 0.1 * offset, - i * (height - offset) / maxY * 0.5 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 0.5 + height - offset);
+			ctx.stroke();
+		}
+	}
+	
+	if (maxY > 0 && maxY < 2){
+		for (i = 1; i < maxY * 4; i++){
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#000000";
+			ctx.moveTo(offset - 8, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.lineTo(offset, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.stroke();
+			ctx.strokeText(i * 0.25, 0.1 * offset, - i * (height - offset) / maxY * 0.25 + height - offset + 3);
+			ctx.beginPath();
+			ctx.strokeStyle = "#999999";
+			ctx.setLineDash([10,15]);
+			ctx.moveTo(offset, - i * (height - offset) / maxY * 0.25 + height - offset);
+			ctx.lineTo(width, - i * (height - offset) / maxY * 0.25 + height - offset);
 			ctx.stroke();
 		}
 	}

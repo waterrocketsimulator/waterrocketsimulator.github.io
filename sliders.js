@@ -8,28 +8,6 @@ stagesNum.oninput = function(){
 	launch();
 }
 
-var landing = document.getElementById("landing");
-var landingOutput = document.getElementById("landingValue");
-if (landing.value == 0) landingOutput.innerHTML = "no";
-else landingOutput.innerHTML = "yes";
-
-landing.oninput = function(){
-	if (landing.value == 0) landingOutput.innerHTML = "no";
-  else landingOutput.innerHTML = "yes";
-  launch(); 
-	console.log("landing: " + landing.value);
-}
-
-var units = document.getElementById("units");
-var unitsOutput = document.getElementById("unitsValue");
-if (units.value == 0) unitsOutput.innerHTML = "metric";
-else unitsOutput.innerHTML = "imperial";
-
-units.oninput = function(){
-	if (units.value == 0) unitsOutput.innerHTML = "metric";
-	else unitsOutput.innerHTML = "imperial";
-	launch();
-}
 
 //stage 1
 var vesselCapacity = document.getElementById("vesselCapacity");
@@ -136,20 +114,6 @@ nozzleDiameterOutput.onchange = function(){
 	launch();
 }
 
-var reserve = document.getElementById("reserve");
-var reserveOutput = document.getElementById("reserveValue");
-reserveOutput.value = reserve.value;
-
-reserve.oninput = function(){
-	reserveOutput.value = reserve.value;
-  launch(); 
-}
-
-reserveOutput.onchange = function(){
-	reserve.value = reserveOutput.value;
-	launch();
-}
-
 var launchTubeLength = document.getElementById("launchTubeLength");
 var launchTubeLengthOutput = document.getElementById("launchTubeLengthValue");
 launchTubeLengthOutput.value = launchTubeLength.value;
@@ -178,9 +142,34 @@ launchTubeDiameterOutput.onchange = function(){
 	launch();
 }
 
+var landing1 = document.getElementById("landing1");
+var landingOutput1 = document.getElementById("landingValue1");
+if (landing1.value == 0) landingOutput1.innerHTML = "no";
+else landingOutput1.innerHTML = "yes";
+
+landing1.oninput = function(){
+	if (landing1.value == 0) landingOutput1.innerHTML = "no";
+  else landingOutput1.innerHTML = "yes";
+  launch(); 
+	console.log("landing1: " + landing1.value);
+}
+
+var reserve1 = document.getElementById("reserve1");
+var reserveOutput1 = document.getElementById("reserveValue1");
+reserveOutput1.value = reserve1.value;
+
+reserve1.oninput = function(){
+	reserveOutput1.value = reserve1.value;
+  launch(); 
+}
+
+reserveOutput1.onchange = function(){
+	reserve1.value = reserveOutput1.value;
+	launch();
+}
+
 
 //same for stage 2
-
 
 var vesselCapacity2 = document.getElementById("vesselCapacity2");
 var vesselCapacityOutput2 = document.getElementById("vesselCapacityValue2");
@@ -278,6 +267,33 @@ nozzleDiameterOutput2.onchange = function(){
 	nozzleDiameter2.value = nozzleDiameterOutput2.value;
 	launch();
 }
+
+var landing2 = document.getElementById("landing2");
+var landingOutput2 = document.getElementById("landingValue2");
+if (landing2.value == 0) landingOutput2.innerHTML = "no";
+else landingOutput2.innerHTML = "yes";
+
+landing2.oninput = function(){
+	if (landing2.value == 0) landingOutput2.innerHTML = "no";
+  else landingOutput2.innerHTML = "yes";
+  launch(); 
+	console.log("landing2: " + landing2.value);
+}
+
+var reserve2 = document.getElementById("reserve2");
+var reserveOutput2 = document.getElementById("reserveValue2");
+reserveOutput2.value = reserve2.value;
+
+reserve2.oninput = function(){
+	reserveOutput2.value = reserve2.value;
+  launch(); 
+}
+
+reserveOutput2.onchange = function(){
+	reserve2.value = reserveOutput2.value;
+	launch();
+}
+
 
 
 //same for stage 3
@@ -379,6 +395,31 @@ nozzleDiameterOutput3.onchange = function(){
 	launch();
 }
 
+var landing3 = document.getElementById("landing3");
+var landingOutput3 = document.getElementById("landingValue3");
+if (landing3.value == 0) landingOutput3.innerHTML = "no";
+else landingOutput3.innerHTML = "yes";
+
+landing3.oninput = function(){
+	if (landing3.value == 0) landingOutput3.innerHTML = "no";
+  else landingOutput3.innerHTML = "yes";
+  launch(); 
+	console.log("landing3: " + landing3.value);
+}
+
+var reserve3 = document.getElementById("reserve3");
+var reserveOutput3 = document.getElementById("reserveValue3");
+reserveOutput3.value = reserve3.value;
+
+reserve3.oninput = function(){
+	reserveOutput3.value = reserve3.value;
+  launch(); 
+}
+
+reserveOutput3.onchange = function(){
+	reserve3.value = reserveOutput3.value;
+	launch();
+}
 
 
 function hideStages(){

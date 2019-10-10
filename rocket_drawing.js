@@ -3,6 +3,7 @@ function drawRocketBody() {
   var ctx = rocketBody.getContext("2d");
 	var readWidth = document.getElementById("rocketBodyCell").offsetWidth;
 	ctx.canvas.width = readWidth - 5;
+	ctx.canvas.height = readWidth * 2.5;
 	var height = rocketBody.height;
 	var width = rocketBody.width;
 	var drawingFillFraction = 0.8; //how much of width/height occupies the model
