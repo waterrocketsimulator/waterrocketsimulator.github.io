@@ -26,7 +26,7 @@
 	<p id=imprint>By Voytex</p>
   </div>	
   
- <h2>Design and test your water rocket, even with stages!</h2>
+ <h2>Design, test and land your water rocket, even with stages!</h2>
 
 <div class="globalGrid">
 	  <div id="stagesSlider">
@@ -44,93 +44,139 @@
   <div class="sliderContainer" id="stage1">
 	  <h3>Stage 1</h3>
 	  <div class="tooltip">Vessel capacity<span class="tooltiptext">Volume of rocket's fuel tank. Bigger capacity means more space for water and compressed air</span> <input type="text" id="vesselCapacityValue" size="1"> [ l ]</div>
-		<input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity">
+		<input type="range" min="0.5" max="100" value="2.6" class="slider" step="0.1" id="vesselCapacity">
 			  
 	  <div class="tooltip">Water fill <span class="tooltiptext">Water is fuel which thrown out through the nozzle propels the rocket. Although too high volume causes bigger weight needed to lift and takes overs space for compressed air. Find easily optimal value with slider</span><input type="text" id="waterCapacityValue" size="1"> [ l ]  (<span id="waterPercentage"></span> %)</div>
-	  <input type="range" min="0" max="60" value="9.5" class="slider" step="0.01" id="waterCapacity">
+	  <input type="range" min="0" max="70" value="1.3" class="slider" step="0.01" id="waterCapacity">
 	  
 	  <div class="tooltip">Rocket's dry mass <span class="tooltiptext">The lighter rocket is without fuel, the higher speed it can reach due to rocket equation. Mass of upper stages and it's fuel is added in calculations to dry mass in lower stages</span><input type="text" id="rocketDryMassValue" size="1"> [ kg ]</div>
-	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass">
+	  <input type="range" min="0.01" max="25" value=".6" class="slider" step="0.01" id="rocketDryMass">
 	  
 	  <div class="tooltip">Air pressure <span class="tooltiptext">Pressurised air fills free space in vessel and stores energy. Higher pressures requires tougher vessel</span><input type="text" id="pressureValue" size="1"> [ bar ]</div>
-	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure">
+	  <input type="range" min="1" max="200" value="10" class="slider" step="0.1" id="pressure">
 	  
 	  <div class="tooltip">Drag coefficient <span class="tooltiptext">Depends on fins and nose shape. Higher coeficient results in higher drag force. Usually it is determined experimentally</span><input type="text" id="dragCoefficientValue" size="1"> [ - ]</div>
 	  <input type="range" min="0" max="1" value="0.7" class="slider" step="0.01" id="dragCoefficient">
 	  
 	  <div class="tooltip">Rocket's diameter <span class="tooltiptext">The larger rocket's diameter is the harder air drag is affecting the rocket. Wider rockets provide more volume, but smaller ones can withstand higher pressures</span><input type="text" id="vesselDiameterValue" size="1"> [ mm ]</div>
-	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter">
+	  <input type="range" min="25" max="500" value="115" class="slider" step="1" id="vesselDiameter">
 	  
 	  <div class="tooltip">Nozzle diameter <span class="tooltiptext">Wider nozzle results in faster empting vessel and higher thrust force, but it generates also higher loads on rocket structure</span><input type="text" id="nozzleDiameterValue" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="nozzleDiameter">
+	  <input type="range" min="2" max="50" value="7" class="slider" step="0.1" id="nozzleDiameter">
 		
 		<div class="tooltip">Launch tube length <span class="tooltiptext">Launch tube is the most efficient way to accelerate rocket. Can be as long as the first stage vessel</span><input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</div>
 	  <input type="range" min="0" max="5000" value="0" class="slider" step="1" id="launchTubeLength">
 		
 		<div class="tooltip">Launch tube diam. <span class="tooltiptext">Bigger is always better - generates more thrust, but lunch tube can has at most same diameter as nozzle</span><input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="40" value="15" class="slider" step="0.1" id="launchTubeDiameter">
+	  <input type="range" min="2" max="50" value="7" class="slider" step="0.1" id="launchTubeDiameter">
 		
+		<div class="tooltip">Landing attempt: <span class="tooltiptext">The next level of play with water rockets is landing it. Try it!</span><span id="landingValue1"></span></div>
+    <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing1">
 		
+		<div id="landingPanel1"><h4>Landing Vessel of stage 1</h4>
+		 <div class="tooltip">Vessel capacity: <span class="tooltiptext">Additional vessel which will act as an engine for breaking</span><input type="text" id="landingCapacity1Value" size="1"> [ l ]</div>
+	   <input type="range" min=".5" max="100" value="2.6" class="slider" step=".1" id="landingCapacity1">
+		
+	   <div class="tooltip">Water fill: <span class="tooltiptext">This fuel mass is treated as additional dry mass during ascent, so should be as low as possible. Pick the value which will provide slowing down to 0 m/s</span><input type="text" id="landingWater1Value" size="1"> [ l ] (<span id="landingWaterPercentage1"></span> %)</div>
+	   <input type="range" min="0" max="99" value=".3" class="slider" step=".01" id="landingWater1">		
+
+		 <div class="tooltip">Air pressure: <span class="tooltiptext">Pressurised air fills free space in vessel and stores energy. Higher pressures requires tougher vessel</span><input type="text" id="landingPressure1Value" size="1"> [ bar ]</div>
+	   <input type="range" min="1" max="100" value="10" class="slider" step=".1" id="landingPressure1">
+		
+		 <div class="tooltip">Nozzle diameter: <span class="tooltiptext">During landing theres is less fuel onbard, so deceleration values will be higher</span><input type="text" id="landingNozzleDiameter1Value" size="1"> [ mm ]</div>
+	   <input type="range" min="2" max="40" value="7" class="slider" step=".1" id="landingNozzleDiameter1">		
+		
+		 <div class="tooltip">Landing burn starts at: <span class="tooltiptext">Rocket must start breaking at specific height, so as the burnout occurs at the ground level</span><input type="text" id="landingBurnHeight1Value" size="1"> [ m ]</div>
+	   <input type="range" min="1" max="100" value="4.3" class="slider" step=".1" id="landingBurnHeight1">
+		</div>
   </div>
 	
 	<div class="sliderContainer" id="stage2">
 	  <h3>Stage 2</h3>
 	  <div class="tooltip">Vessel capacity <input type="text" id="vesselCapacityValue2" size="1"> [ l ]</div>
-		<input type="range" min="0.5" max="100" value="19" class="slider" step="0.1" id="vesselCapacity2">
+		<input type="range" min="0.5" max="100" value="27.6" class="slider" step="0.1" id="vesselCapacity2">
 			  
 	  <div class="tooltip">Water fill <input type="text" id="waterCapacityValue2" size="1"> [ l ]  (<span id="waterPercentage2"></span> %)</div>
 	  <input type="range" min="0" max="60" value="10" class="slider" step="0.01" id="waterCapacity2">
 	  
 	  <div class="tooltip">Rocket's dry mass <input type="text" id="rocketDryMassValue2" size="1"> [ kg ]</div>
-	  <input type="range" min="0.1" max="25" value="2.5" class="slider" step="0.01" id="rocketDryMass2">
+	  <input type="range" min="0.01" max="25" value="1.75" class="slider" step="0.01" id="rocketDryMass2">
 	  
 	  <div class="tooltip">Air pressure <input type="text" id="pressureValue2" size="1"> [ bar ]</div>
-	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure2">
+	  <input type="range" min="1" max="300" value="10" class="slider" step="0.1" id="pressure2">
 	  
 	  <div class="tooltip">Drag coefficient <input type="text" id="dragCoefficientValue2" size="1"> [ - ]</div>
-	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient2">
+	  <input type="range" min="0" max="1" value="0.7" class="slider" step="0.01" id="dragCoefficient2">
 	  
 	  <div class="tooltip">Rocket's diameter <input type="text" id="vesselDiameterValue2" size="1"> [ mm ]</div>
-	  <input type="range" min="25" max="500" value="200" class="slider" step="1" id="vesselDiameter2">
+	  <input type="range" min="25" max="500" value="315" class="slider" step="1" id="vesselDiameter2">
 	  
 	  <div class="tooltip">Nozzle diameter <input type="text" id="nozzleDiameterValue2" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="40" value="12" class="slider" step="0.1" id="nozzleDiameter2">
+	  <input type="range" min="2" max="40" value="9" class="slider" step="0.1" id="nozzleDiameter2">
 		
 		<div class="tooltip">Landing attempt: <span class="tooltiptext">This is test of tooltip</span><span id="landingValue2"></span></div>
     <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing2">
+				
+		<div id="landingPanel2"><h4>Landing Vessel of stage 2</h4>
+		 <div class="tooltip">Vessel capacity: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingCapacity2Value" size="1"> [ l ]</div>
+	   <input type="range" min=".5" max="100" value="4.6" class="slider" step=".1" id="landingCapacity2">
 		
-		<p class="tooltip">Water reserve for landing: <input type="text" id="reserveValue2" size="1"> [ % ]</p>
-	  <input type="range" min=".1" max="=90" value="10" class="slider" step=".5" id="reserve2">
+	   <div class="tooltip">Water fill: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingWater2Value" size="1"> [ l ] (<span id="landingWaterPercentage2"></span> %)</div>
+	   <input type="range" min="0" max="99" value="2" class="slider" step=".01" id="landingWater2">		
+
+		 <div class="tooltip">Air pressure: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingPressure2Value" size="1"> [ bar ]</div>
+	   <input type="range" min="1" max="100" value="10" class="slider" step=".1" id="landingPressure2">
+		
+		 <div class="tooltip">Nozzle diameter: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingNozzleDiameter2Value" size="1"> [ mm ]</div>
+	   <input type="range" min="2" max="40" value="9" class="slider" step=".1" id="landingNozzleDiameter2">		
+		
+		 <div class="tooltip">Landing burn starts at: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingBurnHeight2Value" size="1"> [ m ]</div>
+	   <input type="range" min="1" max="100" value="15" class="slider" step=".1" id="landingBurnHeight2">
+		</div>
   </div>
 	
 	<div class="sliderContainer" id="stage3">
 	  <h3>Stage 3</h3>
 	  <div class="tooltip">Vessel capacity <input type="text" id="vesselCapacityValue3" size="1"> [ l ]</div>
-		<input type="range" min="0.5" max="100" value="2" class="slider" step="0.1" id="vesselCapacity3">
+		<input type="range" min="0.5" max="100" value="2.3" class="slider" step="0.1" id="vesselCapacity3">
 			  
 	  <div class="tooltip">Water fill <input type="text" id="waterCapacityValue3" size="1"> [ l ]  (<span id="waterPercentage3"></span> %)</div>
-	  <input type="range" min="0" max="60" value="1" class="slider" step="0.01" id="waterCapacity3">
+	  <input type="range" min="0" max="60" value="1.15" class="slider" step="0.01" id="waterCapacity3">
 	  
 	  <div class="tooltip">Rocket's dry mass <input type="text" id="rocketDryMassValue3" size="1"> [ kg ]</div>
-	  <input type="range" min="0.1" max="25" value="0.4" class="slider" step="0.01" id="rocketDryMass3">
+	  <input type="range" min="0.01" max="25" value="0.8" class="slider" step="0.01" id="rocketDryMass3">
 	  
 	  <div class="tooltip">Air pressure <input type="text" id="pressureValue3" size="1"> [ bar ]</div>
 	  <input type="range" min="1" max="100" value="10" class="slider" step="0.1" id="pressure3">
 	  
 	  <div class="tooltip">Drag coefficient <input type="text" id="dragCoefficientValue3" size="1"> [ - ]</div>
-	  <input type="range" min="0" max="1" value="0.5" class="slider" step="0.01" id="dragCoefficient3">
+	  <input type="range" min="0" max="1" value="0.7" class="slider" step="0.01" id="dragCoefficient3">
 	  
 	  <div class="tooltip">Rocket's diameter <input type="text" id="vesselDiameterValue3" size="1"> [ mm ]</div>
-	  <input type="range" min="25" max="500" value="100" class="slider" step="1" id="vesselDiameter3">
+	  <input type="range" min="25" max="500" value="105" class="slider" step="1" id="vesselDiameter3">
 	  
 	  <div class="tooltip">Nozzle diameter <input type="text" id="nozzleDiameterValue3" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="40" value="10" class="slider" step="0.1" id="nozzleDiameter3">
+	  <input type="range" min="2" max="40" value="7" class="slider" step="0.1" id="nozzleDiameter3">
 		
 		<div class="tooltip">Landing attempt: <span class="tooltiptext">This is test of tooltip</span><span id="landingValue3"></span></div>
-    <input type="range" min="0" max="1" value="1" class="slider" step="1" id="landing3">
+    <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing3">
 		
-		<p class="tooltip">Water reserve for landing: <input type="text" id="reserveValue3" size="1"> [ % ]</p>
-	  <input type="range" min=".1" max="=90" value="10" class="slider" step=".5" id="reserve3">
+		<div id="landingPanel3"><h4>Landing Vessel of stage 3</h4>
+		 <div class="tooltip">Vessel capacity: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingCapacity3Value" size="1"> [ l ]</div>
+	   <input type="range" min=".5" max="100" value="2.6" class="slider" step=".1" id="landingCapacity3">
+		
+	   <div class="tooltip">Water fill: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingWater3Value" size="1"> [ l ] (<span id="landingWaterPercentage3"></span> %)</div>
+	   <input type="range" min="0" max="99" value="0.41" class="slider" step=".01" id="landingWater3">		
+
+		 <div class="tooltip">Air pressure: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingPressure3Value" size="1"> [ bar ]</div>
+	   <input type="range" min="1" max="100" value="10" class="slider" step=".1" id="landingPressure3">
+		
+		 <div class="tooltip">Nozzle diameter: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingNozzleDiameter3Value" size="1"> [ mm ]</div>
+	   <input type="range" min="2" max="40" value="7" class="slider" step=".1" id="landingNozzleDiameter3">		
+		
+		 <div class="tooltip">Landing burn starts at: <span class="tooltiptext">This is test of tooltip</span><input type="text" id="landingBurnHeight3Value" size="1"> [ m ]</div>
+	   <input type="range" min="1" max="100" value="4.4" class="slider" step=".1" id="landingBurnHeight3">
+		</div>
   </div>
 
 
@@ -150,12 +196,15 @@
 		<canvas class="plot" id="thrustPlot" width="250" height="250"></canvas>
 		<p>Thrust [N]</p>
 	</div>
-	<!--
+		<div class="energyPlot">	
+		<canvas class="plot" id="energyPlot" width="250" height="250"></canvas>
+		<p>Kinetic and mechanical energy of each stage [J]</p>
+	</div>
 	<div class="exhaustPlot">	
 		<canvas class="plot" id="exhaustPlot" width="250" height="250"></canvas>
 		<p>Exhaust velocity [m/s]</p>
 	</div>
-	-->
+
 
  
   <div class="table">
@@ -170,7 +219,10 @@
 	  		<th scope="col" class="value2">Stage 2</th>
 	  		<th scope="col" class="value3">Stage 3</th>
 	  		<th scope="col">Unit</th>
-	  	</thead>  
+	  	</thead> 
+			<thead>
+				<th colspan=5 scope="colgroup">Ascent</th> 
+			</thead> 
 		</tr>	
     <tr>
 			<td>Altitude</td> 
@@ -256,7 +308,45 @@
   		<td id="initialIsp3" class="value3"></td>
 	  	<td>[ s ]</td>
 		</tr>
-    			
+		<thaed>
+			<th colspan="5" scope="colgroup">Landing</th>
+		</thaed>
+    <tr>
+  		<td>Burnout altitude</td>
+  		<td id="burnoutAltitude1" class="value"></td>
+  		<td id="burnoutAltitude2" class="value2"></td>
+  		<td id="burnoutAltitude3" class="value3"></td>
+	  	<td>[ m ]</td>
+		</tr>	
+		<tr>
+  		<td>Burnout velocity</td>
+  		<td id="burnoutVelocity1" class="value"></td>
+  		<td id="burnoutVelocity2" class="value2"></td>
+  		<td id="burnoutVelocity3" class="value3"></td>
+	  	<td>[ m/s ]</td>
+		</tr>	
+		<tr>
+  		<td>Landing burn time</td>
+  		<td id="landingBurnTime1" class="value"></td>
+  		<td id="landingBurnTime2" class="value2"></td>
+  		<td id="landingBurnTime3" class="value3"></td>
+	  	<td>[ s ]</td>
+		</tr>	
+		<tr>
+  		<td>Landing burn delta v</td>
+  		<td id="landingBurnDeltaV1" class="value"></td>
+  		<td id="landingBurnDeltaV2" class="value2"></td>
+  		<td id="landingBurnDeltaV3" class="value3"></td>
+	  	<td>[ m/s ]</td>
+		</tr>
+		<tr>
+  		<td>Landing burn initial acceleration</td>
+  		<td id="landingBurnAcceleration1" class="value"></td>
+  		<td id="landingBurnAcceleration2" class="value2"></td>
+  		<td id="landingBurnAcceleration3" class="value3"></td>
+	  	<td>[ g ]</td>
+		</tr>
+					
 		</table>
 	</div>
 	<div class="rocketBody" id="rocketBodyCell">	

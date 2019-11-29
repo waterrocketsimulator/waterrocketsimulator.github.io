@@ -177,7 +177,6 @@ function drawRocketBody() {
 	
 	ltPercentage = lt * scale / stage1Height;
 	if (ltPercentage > 1) ltPercentage = 1;
-	console.log("ltPercent: " + ltPercentage);
 	
 	ctx.fillRect(width / 2 - ltDiameter / 2, height - offset, ltDiameter, - stage1Height * ltPercentage);
 	linearGradient = ctx.createLinearGradient(width / 2 - ltBase / 2, 0, width / 2 + ltBase / 2, 0);

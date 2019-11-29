@@ -27,6 +27,12 @@ h3{
     padding: 10px;
 }
 
+h4{
+		font-size: 16px;
+    text-align: center;
+    padding: 3px;
+}
+
 p {
     font-size: 16px;
     text-align: center;
@@ -38,8 +44,8 @@ p {
 
 .globalGrid{
 	display: grid;
-	grid-template-columns: minmax(278px, 300px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(180px, 350px);
-	grid-template-rows: 80px 430px 440px 440px;
+	grid-template-columns: minmax(268px, 300px) minmax(205px, 400px) minmax(205px, 400px) 370px minmax(180px, 350px);
+	grid-template-rows: 80px 430px 425px 530px 680px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -50,15 +56,25 @@ p {
 #stagesSlider {
 	grid-row: 1 / span 1;
 	grid-column: 3 / span 1; 
-  width: 180px;
+  width: 175px;
 }
 
 #landing1 {
 	display: block;
+	width: 50px;
+	margin-left: 14px;
 }
 
-#reserve1 {
+#landing2 {
 	display: block;
+	width: 50px;
+	margin-left: 14px;
+}
+
+#landing3 {
+	display: block;
+	width: 50px;
+	margin-left: 14px;
 }
 
 #stage1 {
@@ -68,14 +84,30 @@ p {
 
 #stage2 {
   display: inline;
-	grid-row: 3 / span 1;
+	grid-row: 4 / span 1;
 	grid-column: 1 / span 1;
+	margin: -170px 0px 0px 0px;
 }
 
 #stage3 {
   display: inline;
-	grid-row: 4 / span 1;
+	grid-row: 5 / span 1;
 	grid-column: 1 / span 1;
+}
+
+#landingPanel1 {
+	display: inline;
+	visibility: hidden;
+}
+
+#landingPanel2 {
+	display: inline;
+	visibility: hidden;
+}
+
+#landingPanel3 {
+	display: inline;
+	visibility: hidden;
 }
 
 .value2 {
@@ -106,11 +138,17 @@ p {
 	grid-area: 3 / 3 / span 1 / span 1;
 	
 }
-.exhaustPlot{
+.energyPlot{
 		
-	grid-area: 4 / 2 / span 1 / span 1;
+	grid-area: 4 / 2 / span 2 / span 1;
 	
 }
+.exhaustPlot{
+		
+	grid-area: 4 / 3 / span 2 / span 1;
+	
+}
+
 
 .plot{
 	border: 1px solid black;
@@ -182,7 +220,7 @@ td {
 .slider {
     -webkit-appearance: none;
     background: #d3d3d3;
-    height: 5px;
+    height: 4px;
     width: 90%;
     transition: opacity 0.3s;	
     display: block;
@@ -197,8 +235,8 @@ td {
 .slider::-webkit-slider-thumb{
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%; 
     background: #FFFFFF;
     cursor: pointer;
