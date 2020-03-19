@@ -50,7 +50,7 @@
 	  <input type="range" min="0" max="70" value="1.3" class="slider" step="0.01" id="waterCapacity">
 	  
 	  <div class="tooltip">Rocket's dry mass <span class="tooltiptext">The lighter rocket is without fuel, the higher speed it can reach due to rocket equation. Mass of upper stages and it's fuel is added in calculations to dry mass in lower stages</span><input type="text" id="rocketDryMassValue" size="1"> [ kg ]</div>
-	  <input type="range" min="0.01" max="25" value=".6" class="slider" step="0.01" id="rocketDryMass">
+	  <input type="range" min="0.01" max="25" value="1.4" class="slider" step="0.01" id="rocketDryMass">
 	  
 	  <div class="tooltip">Air pressure <span class="tooltiptext">Pressurised air fills free space in vessel and stores energy. Higher pressures requires tougher vessel</span><input type="text" id="pressureValue" size="1"> [ bar ]</div>
 	  <input type="range" min="1" max="200" value="10" class="slider" step="0.1" id="pressure">
@@ -62,13 +62,13 @@
 	  <input type="range" min="25" max="500" value="115" class="slider" step="1" id="vesselDiameter">
 	  
 	  <div class="tooltip">Nozzle diameter <span class="tooltiptext">Wider nozzle results in faster empting vessel and higher thrust force, but it generates also higher loads on rocket structure</span><input type="text" id="nozzleDiameterValue" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="50" value="7" class="slider" step="0.1" id="nozzleDiameter">
+	  <input type="range" min="2" max="50" value="9" class="slider" step="0.1" id="nozzleDiameter">
 		
 		<div class="tooltip">Launch tube length <span class="tooltiptext">Launch tube is the most efficient way to accelerate rocket. Can be as long as the first stage vessel</span><input type="text" id="launchTubeLengthValue" size="1"> [ mm ]</div>
 	  <input type="range" min="0" max="5000" value="0" class="slider" step="1" id="launchTubeLength">
 		
 		<div class="tooltip">Launch tube diam. <span class="tooltiptext">Bigger is always better - generates more thrust, but lunch tube can has at most same diameter as nozzle</span><input type="text" id="launchTubeDiameterValue" size="1"> [ mm ]</div>
-	  <input type="range" min="2" max="50" value="7" class="slider" step="0.1" id="launchTubeDiameter">
+	  <input type="range" min="2" max="50" value="9" class="slider" step="0.1" id="launchTubeDiameter">
 		
 		<div class="tooltip">Landing attempt: <span class="tooltiptext">The next level of play with water rockets is landing it. Try it!</span><span id="landingValue1"></span></div>
     <input type="range" min="0" max="1" value="0" class="slider" step="1" id="landing1">
@@ -78,16 +78,16 @@
 	   <input type="range" min=".5" max="100" value="2.6" class="slider" step=".1" id="landingCapacity1">
 		
 	   <div class="tooltip">Water fill: <span class="tooltiptext">This fuel mass is treated as additional dry mass during ascent, so should be as low as possible. Pick the value which will provide slowing down to 0 m/s</span><input type="text" id="landingWater1Value" size="1"> [ l ] (<span id="landingWaterPercentage1"></span> %)</div>
-	   <input type="range" min="0" max="99" value=".3" class="slider" step=".01" id="landingWater1">		
+	   <input type="range" min="0" max="99" value=".6" class="slider" step=".01" id="landingWater1">		
 
 		 <div class="tooltip">Air pressure: <span class="tooltiptext">Pressurised air fills free space in vessel and stores energy. Higher pressures requires tougher vessel</span><input type="text" id="landingPressure1Value" size="1"> [ bar ]</div>
 	   <input type="range" min="1" max="100" value="10" class="slider" step=".1" id="landingPressure1">
 		
 		 <div class="tooltip">Nozzle diameter: <span class="tooltiptext">During landing theres is less fuel onbard, so deceleration values will be higher</span><input type="text" id="landingNozzleDiameter1Value" size="1"> [ mm ]</div>
-	   <input type="range" min="2" max="40" value="7" class="slider" step=".1" id="landingNozzleDiameter1">		
+	   <input type="range" min="2" max="40" value="9" class="slider" step=".1" id="landingNozzleDiameter1">		
 		
 		 <div class="tooltip">Landing burn starts at: <span class="tooltiptext">Rocket must start breaking at specific height, so as the burnout occurs at the ground level</span><input type="text" id="landingBurnHeight1Value" size="1"> [ m ]</div>
-	   <input type="range" min="1" max="100" value="4.3" class="slider" step=".1" id="landingBurnHeight1">
+	   <input type="range" min="1" max="100" value="2.9" class="slider" step=".1" id="landingBurnHeight1">
 		</div>
   </div>
 	
