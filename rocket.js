@@ -162,12 +162,14 @@ launch();
 			var hBurnout = results[14];
 			vBurnout = results[15];
 			var landingTime = results[16];
+			var apogeeToIgnitionTime = results[18]
 			var landingDeltaV = results[17];
 			var landingAcceleration = results[2];
 		
 			document.getElementById("burnoutAltitude1").innerHTML = Math.round(hBurnout * 10) / 10;
 			document.getElementById("burnoutVelocity1").innerHTML = Math.round(vBurnout * 10) / 10;
-			document.getElementById("landingBurnTime1").innerHTML = Math.round(landingTime * 10) / 10;
+			document.getElementById("landingBurnTime1").innerHTML = Math.round(landingTime * 100) / 100;
+			document.getElementById("apogeeToIgnitionTime1").innerHTML = Math.round(apogeeToIgnitionTime * 100) / 100;
 			document.getElementById("landingBurnDeltaV1").innerHTML = Math.round(landingDeltaV * 10) / 10;
 			document.getElementById("landingBurnAcceleration1").innerHTML = Math.round(landingAcceleration * 10) / 10;
 		}
@@ -247,12 +249,14 @@ launch();
 				var hBurnout = results[14];
 				vBurnout = results[15];
 				var landingTime = results[16];
+				var apogeeToIgnitionTime = results[18]
 				var landingDeltaV = results[17];
 				var landingAcceleration = results[2];
 		
 				document.getElementById("burnoutAltitude2").innerHTML = Math.round(hBurnout * 10) / 10;
 				document.getElementById("burnoutVelocity2").innerHTML = Math.round(vBurnout * 10) / 10;
-				document.getElementById("landingBurnTime2").innerHTML = Math.round(landingTime * 10) / 10;
+				document.getElementById("landingBurnTime2").innerHTML = Math.round(landingTime * 100) / 100;
+				document.getElementById("apogeeToIgnitionTime2").innerHTML = Math.round(apogeeToIgnitionTime * 100) / 100;
 				document.getElementById("landingBurnDeltaV2").innerHTML = Math.round(landingDeltaV * 10) / 10;
 				document.getElementById("landingBurnAcceleration2").innerHTML = Math.round(landingAcceleration * 10) / 10;
 			}
@@ -324,12 +328,14 @@ launch();
 				var hBurnout = results[14];
 				vBurnout = results[15];
 				var landingTime = results[16];
+				var apogeeToIgnitionTime = results[18]
 				var landingDeltaV = results[17];
 				var landingAcceleration = results[2];
 		
 				document.getElementById("burnoutAltitude3").innerHTML = Math.round(hBurnout * 10) / 10;
 				document.getElementById("burnoutVelocity3").innerHTML = Math.round(vBurnout * 10) / 10;
-				document.getElementById("landingBurnTime3").innerHTML = Math.round(landingTime * 10) / 10;
+				document.getElementById("landingBurnTime3").innerHTML = Math.round(landingTime * 100) / 100;
+				document.getElementById("apogeeToIgnitionTime3").innerHTML = Math.round(apogeeToIgnitionTime * 100) / 100;
 				document.getElementById("landingBurnDeltaV3").innerHTML = Math.round(landingDeltaV * 10) / 10;
 				document.getElementById("landingBurnAcceleration3").innerHTML = Math.round(landingAcceleration * 10) / 10;
 			}
@@ -398,26 +404,27 @@ function stageIgnition(land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, t
 	var waterLossFactor = 0.1; //pressure loss factor in nozzle for water flow
 	var airLossFactor = 0.5; //pressure loss factor in nozzle for air flow
 	var launchTubeWall = 0.0028 //launch tube wall thickness
-  var k = 1.4; //Boltzman constant for atmospheric air
-  var g = 9.81; //acceleration of Earth's gravity
-  var tempI = temp; //initial temperature in Kelvins (K)
+    var k = 1.4; //Boltzman constant for atmospheric air
+    var g = 9.81; //acceleration of Earth's gravity
+    var tempI = temp; //initial temperature in Kelvins (K)
 	var pI = p; //initial pressure (Pa)
-  var pa = 100000; //atmospheric pressure in Pa (N/m^2) (1 bar)
+    var pa = 100000; //atmospheric pressure in Pa (N/m^2) (1 bar)
 	var Vwi = Vw; //initial volume of water
 	var R = 286.9; //gas constant for air (J / (mol * K))
 	var hw = Vw / Ar; //water height in the rocket's vessel
 	var roA = pa / (R * temp); //air density (kg/m^3)
-  var ve = Math.sqrt(2 * p / ro); //rocket's exhaust velocity (m/s)
-  var C = p * Math.pow(V, k); //constant for adiabatic process
-  var D = -.5 * Cd * roA * vr * vr * Ar; //drag force (N)
+    var ve = Math.sqrt(2 * p / ro); //rocket's exhaust velocity (m/s)
+    var C = p * Math.pow(V, k); //constant for adiabatic process
+    var D = -.5 * Cd * roA * vr * vr * Ar; //drag force (N)
 	var mA = (p + pa) / (R * temp) * V; //mass of pressurised air
 	var roAp = mA / V; //pressurised air density (kg/m^3)
 	var m = m0 + (Vw * ro) + mA; //mass of rocket with water and air;
-  var lastM; //mass from previous loop iteration (kg)
+    var lastM; //mass from previous loop iteration (kg)
 	var dt = 0.001; //time step
 	var localTime = 0; //time counted from ignition for plots generation
+	var apogeeToIgnitionTime = 0; //neceserry parameter for real rocket to determine when to open valve for landing burn (time can be precisely measured, as well as time point of apogee)
 	var dm = An * ro * Math.sqrt(2 * p / ro) * dt; //mass decrease in first step of loop (kg)
-  var T = ve * dm / dt + p * (1 - waterLossFactor) * An; //thrust force (N)
+    var T = ve * dm / dt + p * (1 - waterLossFactor) * An; //thrust force (N)
 	var Isp = T * dt / (g * dm); //specific impulse (s)
 	var TWR = T / (g * m); //thrust to weight ratio (-)
 	var a = T / m - g; //acceleration (m/s^2)
@@ -425,7 +432,7 @@ function stageIgnition(land, h, vr, V, Vw, ro, Ar, An, Alt, p, Cd, m0, lt, ft, t
 	var Mol = 28.96; //molecylar mass of dry air - cold air is really dry
 	var stagesNum = parseInt(numberOfStages.value);
 	var ascentDragWork = 0;
-  var firstLoop = true;
+    var firstLoop = true;
 	var kE; //kinetic energy of the stage (calculated for making plots only out of curiosity)
 	var mE; //mechanical energy of the stage (calculated for making plots only out of curiosity)
 	switch (currentStage){
@@ -520,6 +527,7 @@ if(land){
 		h += vr * dt;
 		ft += dt;
 		localTime += dt;
+		apogeeToIgnitionTime += dt;
 		
 		kE = 0.5 * mStage * vr * vr;
 		mE = kE + mStage * g * h;
@@ -769,7 +777,7 @@ while (a > -9 && mA > 0){
 				break;
 		}
 	}
-	if(a < 0 && land) break; //if acceleration is negative rocket doesn't breaks an more
+	if(a < 0 && land) break; //if acceleration is negative rocket doesn't breaks any more
 }
 
 T = 0;
@@ -939,6 +947,6 @@ for(i = 0; i < plotDataStorage.ascentAltitude.length - 42; i++){
 
 
 //Array with output data
-var results = [outputT, outputve, outputa, TWR, Isp, speedAtMECO, topSpeed, airPulseDeltaV, timeToMECO, MECOaltitude, airPulseEnd, airPulseEndAltitude, altitude, apogeeTime, hBurnout, vBurnout, landingTime, landingDeltaV];
+var results = [outputT, outputve, outputa, TWR, Isp, speedAtMECO, topSpeed, airPulseDeltaV, timeToMECO, MECOaltitude, airPulseEnd, airPulseEndAltitude, altitude, apogeeTime, hBurnout, vBurnout, landingTime, landingDeltaV, apogeeToIgnitionTime];
 return results;
 }
